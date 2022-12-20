@@ -1,4 +1,4 @@
-<table><tr><th><pre>Recently Played Champions
+<table><tr></tr><tr><th><pre>Recently Played Champions
 -------------------------
 <img src='champs/Akali.png' alt='drawing' width='20'/> Akali                        |███████████--------------|  40.00%
 <img src='champs/Neeko.png' alt='drawing' width='20'/> Neeko                        |███████------------------|  25.00%
