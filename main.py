@@ -69,7 +69,7 @@ def main():
     save_img(third[0], "champ3")
 
 
-    with open("test.md", "w") as f:
+    with open("README.md", "w") as f:
         #f.write("test")
 
         f.write("![Champ1](champ1.png)")

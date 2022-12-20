@@ -88,7 +88,7 @@ def main():
         
 
 
-        with open("test.md", "w", encoding="utf-8") as f:
+        with open("README.md", "w", encoding="utf-8") as f:
             f.write("<pre>\n")
             f.write("Recently Played Champions\n-------------------------\n")
             amount = 0
