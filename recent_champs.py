@@ -93,11 +93,11 @@ def main():
 
 
             
-            f.write("<table><tr><th><h3 align='center'>Stats</h3></th><th><h3 align='center'>Most Played</h3></th></tr><tr><th>")
+            f.write("<table><tr></tr><tr><th>")
 
 
 
-            f.write("<pre>\n")
+            f.write("<pre>")
             f.write("Recently Played Champions\n-------------------------\n")
             amount = 0
             for champ in ordered:
@@ -108,7 +108,11 @@ def main():
             f.write("</pre>")
 
 
-            f.write("</th><th><pre><img src='vertical.png' alt='drawing' width='95'/></pre><th></tr></table>")
+            f.write("</th><th>")
+            f.write("<pre>Most Played\n")
+            f.write("-----------\n")
+            f.write("<img src='vertical.png' alt='drawing' width='80'/>\n")
+            f.write("</pre></th></tr></table>")
 
         print("Finished")
     except Exception as e:
