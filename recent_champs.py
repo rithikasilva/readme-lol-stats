@@ -89,6 +89,14 @@ def main():
 
 
         with open("README.md", "w", encoding="utf-8") as f:
+ 
+
+
+            
+            f.write("<table><tr><th><h3 align='center'>Stats</h3></th><th><h3 align='center'>Most Played</h3></th></tr><tr><th>")
+
+
+
             f.write("<pre>\n")
             f.write("Recently Played Champions\n-------------------------\n")
             amount = 0
@@ -98,6 +106,9 @@ def main():
                 f.write(f"<img src='champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(counts[champ]) + f"{round(counts[champ], 2): .2f}%\n".rjust(9, " "))
                 amount += 1
             f.write("</pre>")
+
+
+            f.write("</th><th><pre><img src='vertical.png' alt='drawing' width='95'/></pre><th></tr></table>")
 
         print("Finished")
     except Exception as e:
