@@ -1,4 +1,4 @@
-<img style="float: right;" src="champ1.png">
+<img align="right" width="100" height="100" src="champ1.png">
 <pre>
 Recently Played Champions
 -------------------------
