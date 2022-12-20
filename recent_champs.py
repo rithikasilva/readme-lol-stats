@@ -23,6 +23,15 @@ def get_champ_images(list_of_champs, folder):
 
 
 
+def get_loading_image(champ_name, folder):
+    response = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
+    latest_version = response.json()[0]
+    # Get most played champ image
+    response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{champ_name}_0.jpg")
+    open(f"{folder}/{champ_name}.png", "wb").write(response.content)
+
+
+
 
 def create_loading_bar(percentage):
     bars = int((percentage / 100) * 25)
@@ -51,7 +60,7 @@ def main():
         print(puuid)
 
         # Get list of match ids which I was part of
-        response = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids", {"api_key": key, "start": 0, "count": 20})
+        response = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids", {"api_key": key, "start": 0, "count": 10})
         response = response.json()
         matches = response
         
@@ -84,8 +93,10 @@ def main():
 
 
 
-        get_champ_images(counts, "champs")
-        
+        get_champ_images(counts, "square_champs")
+        get_loading_image(ordered[0], "loading_images")
+
+
 
 
         with open("README.md", "w", encoding="utf-8") as f:
@@ -103,7 +114,7 @@ def main():
             for champ in ordered:
                 if amount >= 5:
                     break
-                f.write(f"<img src='champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(counts[champ]) + f"{round(counts[champ], 2): .2f}%\n".rjust(9, " "))
+                f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(counts[champ]) + f"{round(counts[champ], 2): .2f}%\n".rjust(9, " "))
                 amount += 1
             f.write("</pre>")
 
@@ -111,7 +122,7 @@ def main():
             f.write("</th><th>")
             f.write("<pre>Most Played\n")
             f.write("-----------\n")
-            f.write("<img src='vertical.png' alt='drawing' width='80'/>\n")
+            f.write(f"<img src='loading_images/{ordered[0]}.png' alt='drawing' width='80'/>\n")
             f.write("</pre></th></tr></table>")
 
         print("Finished")
