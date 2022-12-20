@@ -19,7 +19,6 @@ def save_img(champ_id, target):
 
     # Get data from the patch
     response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion.json")
-
     response = response.json()
 
 
