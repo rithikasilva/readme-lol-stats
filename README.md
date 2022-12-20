@@ -1,7 +1,7 @@
+<img style="float: right;" src="champ1.png">
 <pre>
 Recently Played Champions
 -------------------------
-<img style="float: right;" src="champ1.png">
 <img src='champs/Akali.png' alt='drawing' width='20'/> Akali                        |███████████--------------|  40.00%
 <img src='champs/Neeko.png' alt='drawing' width='20'/> Neeko                        |███████------------------|  25.00%
 <img src='champs/Katarina.png' alt='drawing' width='20'/> Katarina                     |████---------------------|  15.00% 
