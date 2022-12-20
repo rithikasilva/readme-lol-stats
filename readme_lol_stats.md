@@ -1,9 +1,3 @@
-text goes here
-
-more text
-
-
-<!---LOL-STATS-START-HERE--->
 <table><tr></tr><tr><th><pre>Recently Played Champions
 -------------------------
 <img src='square_champs/Akali.png' alt='drawing' width='20'/> Akali                        |███████████--------------|  40.00%
@@ -15,6 +9,3 @@ more text
 -----------
 <img align='center' src='loading_images/Akali_9.png' alt='drawing' width='80'/>
 </pre></th></tr></table>
-<!---LOL-STATS-END-HERE--->
-
-even more text
