@@ -9,7 +9,7 @@
 <th>
 <pre>Most Played
 -----------
-<img src='vertical.png' alt='drawing' width='100'/>
+<img src='vertical.png' alt='drawing' width='80'/>
 </pre>
   </th>
   </tr></table>
