@@ -7,5 +7,5 @@
 <img src='square_champs/Yasuo.png' alt='drawing' width='20'/> Yasuo                        |███----------------------|  10.00%
 </pre></th><th><pre>Most Played
 -----------
-<p align='center'> <img src='loading_images/Neeko.png' alt='drawing' width='80'/> </p>
+<p align='center'> <img src='loading_images/Neeko.png' alt='drawing' width='100'/> </p>
 </pre></th></tr></table>
