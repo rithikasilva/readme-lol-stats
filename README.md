@@ -7,8 +7,7 @@
 <img src='champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                      |██-----------------------|   5.00%
 </pre></th>
 <th>
-<pre>
-Most Played
+<pre>Most Played
 -----------
 <img src='vertical.png' alt='drawing' width='100'/>
 </pre>
