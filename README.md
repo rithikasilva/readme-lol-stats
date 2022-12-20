@@ -5,4 +5,4 @@
 <img src='champs/Katarina.png' alt='drawing' width='20'/> Katarina                     |████---------------------|  15.00%
 <img src='champs/Yasuo.png' alt='drawing' width='20'/> Yasuo                        |███----------------------|  10.00%
 <img src='champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                      |██-----------------------|   5.00%
-</pre></th><th><pre><img src='vertical.png' alt='drawing' width='100'/></pre><th></tr></table>
+</pre></th><th><pre><img src='vertical.png' alt='drawing' width='100'/></pre></th></tr></table>
