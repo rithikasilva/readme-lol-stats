@@ -7,5 +7,5 @@
 <img src='square_champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                      |██-----------------------|   5.00%
 </pre></th><th><pre>Most Played
 -----------
-<img align='center' src='loading_images/Akali_9.png' alt='drawing' height='200'/>
+<img align='center' src='loading_images/Akali_9.png' alt='drawing' height='130'/>
 </pre></th></tr></table>
