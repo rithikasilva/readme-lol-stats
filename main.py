@@ -5,45 +5,38 @@ import json
 from collections import Counter
 
 
-
+# Gets square impage
 def get_champ_images(list_of_champs, folder):
     # Get the latest patch
-    response = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
-    latest_version = response.json()[0]
-
-    # Get data from the patch
-    response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion.json")
-    response = response.json()
-
-
-
+    version = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
+    latest_version = version.json()[0]
+    # Get images of each champion
     for champ in list_of_champs:
-        response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/img/champion/{champ}.png")
-        open(f"{folder}/{champ}.png", "wb").write(response.content)
+        champ_image = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/img/champion/{champ}.png")
+        open(f"{folder}/{champ}.png", "wb").write(champ_image.content)
 
 
-
+# Gets the loading screen image of a champion and saves to folder
 def get_loading_image(champ_name, folder):
     config = json.load(open("config.json"))
     skin_num = 0
     if champ_name in config["Skin Substitutions"]:
-        response = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
-        latest_version = response.json()[0]
+        version = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
+        latest_version = version.json()[0]
         # Get the specific skin
-        response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion/{champ_name}.json")
-        data = response.json()
+        champion_data = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion/{champ_name}.json")
+        data = champion_data.json()
         for skin in data["data"][champ_name]["skins"]:
             if skin["name"].lower() == config["Skin Substitutions"][champ_name].lower():
                 skin_num = skin["num"]
-    
     # Get most played champ image
-    response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{champ_name}_{skin_num}.jpg")
-    open(f"{folder}/{champ_name}_{skin_num}.png", "wb").write(response.content)
-
+    loading_image = requests.get(f"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{champ_name}_{skin_num}.jpg")
+    open(f"{folder}/{champ_name}_{skin_num}.png", "wb").write(loading_image.content)
     return f"{champ_name}_{skin_num}"
 
 
 
+# Given a percentage, generates a string to display a loading bar percentage
 def create_loading_bar(percentage):
     bars = int((percentage / 100) * 25)
     out = "|"
@@ -56,86 +49,35 @@ def create_loading_bar(percentage):
     return out
 
 
-
-def main():
-
-    load_dotenv()
-    key = os.getenv("api-key")
-    name = json.load(open("config.json"))["Summoner Name"]
+def get_summoner_identifiers(name, api_key):
+    summoner_values = requests.get(f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}", {"api_key": api_key})
+    data = summoner_values.json()
+    return data["id"], data["puuid"]
 
 
-    # Get my id
-    response = requests.get(f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}", {"api_key": key})
-    response = response.json()
-    id = response["id"]
-    puuid = response["puuid"]
-    print(puuid)
-
-    # Get list of match ids which I was part of
-    response = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids", {"api_key": key, "start": 0, "count": 20})
-    response = response.json()
-    matches = response
-    
-
-    last_champs = []
-    for match in matches:
-        response = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}", {"api_key": key})
-        response = response.json()
-        for participant in response["info"]["participants"]:
-            if participant["puuid"] == puuid:
-                last_champs.append(participant["championName"])
+def get_summoners_matches(puuid, api_key, start, count):
+    matches = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids", {"api_key": api_key, "start": start, "count": count})
+    return matches.json()
 
 
-
-    #last_champs = last_champs[:5]
-    total_length = len(last_champs)
-    counts = Counter(last_champs)
-
-
-    for key in counts:
-        counts[key] = (counts[key] / total_length) * 100
+def get_match_data(match, api_key):
+    match_data = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}", {"api_key": api_key})
+    return match_data.json()
 
 
-
-
-    ordered = sorted(counts, key=counts.get, reverse=True)[:5]
-
-    print(counts)        
-    
-
-
-
-    get_champ_images(counts, "square_champs")
-    loading_image = get_loading_image(ordered[0], "loading_images")
-
-
-
-    with open("readme_lol_stats.md", "w", encoding="utf-8") as f:
-        f.write("<table><tr></tr><tr><th>")
-        f.write("<pre>")
-        f.write("Recently Played Champions\n-------------------------\n")
-        for champ in ordered:
-            f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(counts[champ]) + f"{round(counts[champ], 2): .2f}%\n".rjust(9, " "))
-        f.write("</pre>")
-
-
-        f.write("</th><th>")
-        f.write("<pre>Most Played\n")
-        f.write("-----------\n")
-        f.write(f"<img align='center' src='loading_images/{loading_image}.png' alt='drawing' width='80'/>\n")
-        f.write("</pre></th></tr></table>\n")
-
-
-
-
+def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img):
+     # Write the actual display content to a temporary file
+    with open(temp_file_name, "w", encoding="utf-8") as f:
+        f.write("<table><tr></tr><tr><th><pre>Recently Played Champions\n-------------------------\n")
+        for champ in list_of_champs:
+            f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
 
     # Open the the actual destination
-    final_file_lines = open("README.md", encoding='utf-8').readlines()
-    readme_lol_stats_file = open("readme_lol_stats.md", encoding='utf-8').readlines()
+    final_file_lines = open(target_file, encoding='utf-8').readlines()
+    readme_lol_stats_file = open(temp_file_name, encoding='utf-8').readlines()
 
-
-
-
+    # Parse target file to see where to put widget
     final_output = []
     start_pos = 0
     end_pos = 0
@@ -152,16 +94,48 @@ def main():
     start.extend(end)
     final_output = start
     
-
-    with open("README.md", "w", encoding="utf-8") as f:
+    # Write to target file
+    with open(target_file, "w", encoding="utf-8") as f:
         for line in final_output:
             f.write(line)
 
+    os.remove(temp_file_name)
 
 
+def main():
+
+    load_dotenv()
+    key = os.getenv("api-key")
+    name = json.load(open("config.json"))["Summoner Name"]
+
+    # Get my id
+    id, puuid = get_summoner_identifiers(name, key)
+
+    # Get list of match ids which I was part of
+    matches = get_summoners_matches(puuid, key, 0, 10)
+    
+    # Generate a list of champions that I played in the last x matches
+    last_champs = []
+    for match in matches:
+        response = get_match_data(match, key)
+        for participant in response["info"]["participants"]:
+            if participant["puuid"] == puuid:
+                last_champs.append(participant["championName"])
 
 
+    # Generate all the actual stats
+    total_length = len(last_champs)
+    counts = Counter(last_champs)
+    for key in counts:
+        counts[key] = (counts[key] / total_length) * 100
+    ordered = sorted(counts, key=counts.get, reverse=True)[:5]
 
+     
+    
+    # Gather the square and loading images
+    get_champ_images(counts, "square_champs")
+    loading_image = get_loading_image(last_champs[0], "loading_images")
+    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image)
     print("Finished")
 
 
