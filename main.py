@@ -70,7 +70,7 @@ def get_match_data(match, api_key):
 def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, time_ccing, num_matches):
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
-        f.write(f"<h1 align='center'> Data from Last {num_matches} Matches </h1>")
+        f.write(f"<h2 align='center'> Data from Last {num_matches} Matches </h2>")
         f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Played Champions\n-------------------------\n")
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))

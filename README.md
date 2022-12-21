@@ -5,7 +5,7 @@ Start
 Middle
 
 <!---LOL-STATS-START-HERE--->
-<h1 align='center'> Data from Last 20 Matches </h1><table align='center'><tr></tr><tr><th><pre>Top 5 Played Champions
+<h2 align='center'> Data from Last 20 Matches </h2><table align='center'><tr></tr><tr><th><pre>Top 5 Played Champions
 -------------------------
 <img src='square_champs/Neeko.png' alt='drawing' width='20'/> Neeko                   |█████████----------------|  35.00%
 <img src='square_champs/Akali.png' alt='drawing' width='20'/> Akali                   |█████████----------------|  35.00%
