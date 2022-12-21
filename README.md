@@ -12,9 +12,12 @@ Middle
 <img src='square_champs/Katarina.png' alt='drawing' width='20'/> Katarina                |███----------------------|  10.00%
 <img src='square_champs/Nunu.png' alt='drawing' width='20'/> Nunu                    |██-----------------------|   5.00%
 <img src='square_champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                 |██-----------------------|   5.00%
-
+-------------------------
 Seconds CCing Enemies: 329
-Current Rank: SILVER
+Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' alt='drawing' width='20'/>
+Total Abilities Used: 3937
+Total Solokills: 32
+Total Takedowns: 275
 </pre></th><th><pre>Last Played
 -----------
 <img align='center' src='loading_images/Nunu_0.png' alt='drawing' width='80'/>

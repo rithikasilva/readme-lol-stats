@@ -71,7 +71,9 @@ def get_summoner_rank(id, api_key):
     rank_data = rank_data.json()
     return rank_data[0]
 
-def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches):
+def create_played_and_recent_widget(config, target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches):
+
+
 
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
@@ -79,19 +81,42 @@ def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs,
         f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Recently Played Champions\n-------------------------\n")
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
-        f.write(f"\n")
+        f.write(f"-------------------------\n")
         
 
         # Based on config, populate certain data
-        if "Seconds of CC" in extra_info:
+        if "Seconds of CC" in extra_info and "Seconds of CC" in config["Extra Info"] and config["Extra Info"]["Seconds of CC"]:
             cc = extra_info["Seconds of CC"]
             f.write(f"Seconds CCing Enemies: {cc}\n")
         
-        if "Rank" in extra_info:
-            rank = extra_info["Rank"]
-            f.write(f"Current Rank: {rank}\n")
+        if "Rank" in extra_info and "Display Rank" in config["Extra Info"] and config["Extra Info"]["Display Rank"]:
+            rank = extra_info["Rank"][0] + extra_info["Rank"][1:].lower()
+            f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
+
+        if "Most Played Position" in extra_info and "Rank" in extra_info and "Main Lane" in config["Extra Info"] and config["Extra Info"]["Main Lane"]:
+            position = extra_info["Most Played Position"]
+            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support"}
+            file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
+            rank = extra_info["Rank"][0] + extra_info["Rank"][1:].lower()
+            if position == "ARAM":
+                f.write(f"Most Played Position: {common_names[position]}\n")
+            else:
+                f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
+
+        # Based on config, populate certain data
+        if "Ability Count" in extra_info and "Ability Count" in config["Extra Info"] and config["Extra Info"]["Ability Count"]:
+            count = extra_info["Ability Count"]
+            f.write(f"Total Abilities Used: {count}\n")
 
 
+        if "Solokills" in extra_info and "Solokills" in config["Extra Info"] and config["Extra Info"]["Solokills"]:
+            solokills = extra_info["Solokills"]
+            f.write(f"Total Solokills: {solokills}\n")
+        
+        if "Takedowns" in extra_info and "Takedowns" in config["Extra Info"] and config["Extra Info"]["Takedowns"]:
+            take_downs = extra_info["Takedowns"]
+            f.write(f"Total Takedowns: {take_downs}\n")
+         
 
         f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
  
@@ -147,7 +172,6 @@ def main():
     # Get my id
     id, puuid = get_summoner_identifiers(name, key)
     rank_data = get_summoner_rank(id, key)
-    print(rank_data)
     extra_data["Rank"] = rank_data["tier"]
 
 
@@ -157,14 +181,27 @@ def main():
     # Generate a list of champions that I played in the last x matches
     last_champs = []
     time_ccing = 0
+    played_positions = []
+    ability_usage = 0
+    solo_kills = 0
+    take_downs = 0
     for match in matches:
         response = get_match_data(match, key)
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs.append(participant["championName"])
+                ability_usage += participant["challenges"]["abilityUses"]
+                played_positions.append(participant["individualPosition"])
                 time_ccing += participant["timeCCingOthers"]
+                solo_kills += participant["challenges"]["soloKills"]
+                take_downs += participant["challenges"]["takedowns"]
 
- 
+
+    extra_data["Takedowns"] = take_downs
+    extra_data["Solokills"] = solo_kills
+    extra_data["Ability Count"] = ability_usage
+    extra_data["Most Played Position"] = max(set(played_positions), key=played_positions.count)
+    if extra_data["Most Played Position"] == "Invalid": extra_data["Most Played Position"] = "ARAM"
     extra_data["Seconds of CC"] = time_ccing
 
 
@@ -185,7 +222,7 @@ def main():
     # Gather the square and loading images
     get_champ_images(counts, "square_champs")
     loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look)
+    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look)
     print("Finished")
 
 

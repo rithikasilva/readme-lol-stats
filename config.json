@@ -7,11 +7,11 @@
         "Taliyah": "Pool Party Taliyah"
     },
     "Extra Info": {
-        "Seconds of CC": "True",
-        "Display Rank": "True",
-        "Main Lane": "True",
-        "Ability Count": "True"
-
-
+        "Seconds of CC": 1,
+        "Display Rank": 0,
+        "Main Lane": 0,
+        "Ability Count": 1,
+        "Solokills": 1,
+        "Takedowns": 1
     }
 }
