@@ -5,7 +5,7 @@ Start
 Middle
 
 <!---LOL-STATS-START-HERE--->
-<center><table><tr></tr><tr><th><pre>Recently Played Champions
+<center><table align='center'><tr></tr><tr><th><pre>Recently Played Champions
 -------------------------
 <img src='square_champs/Neeko.png' alt='drawing' width='20'/> Neeko                        |██████████████████-------|  70.00%
 <img src='square_champs/Nunu.png' alt='drawing' width='20'/> Nunu                         |███----------------------|  10.00%
