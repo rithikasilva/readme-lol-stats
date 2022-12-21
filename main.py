@@ -4,6 +4,8 @@ import os
 import json
 from collections import Counter
 
+# Since we are using a personal key, we have a rate limit of 100 requests/2 minutes
+sleep_time = 0
 
 # Gets square impage
 def get_champ_images(list_of_champs, folder):
@@ -65,13 +67,14 @@ def get_match_data(match, api_key):
     return match_data.json()
 
 
-def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img):
+def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, time_ccing):
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
         f.write("<table><tr></tr><tr><th><pre>Recently Played Champions\n-------------------------\n")
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th>")
+        f.write(f"<th><pre>Seconds CCing Enemies: {time_ccing}\n</pre></th></tr></table>\n")
 
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
@@ -116,11 +119,13 @@ def main():
     
     # Generate a list of champions that I played in the last x matches
     last_champs = []
+    time_ccing = 0
     for match in matches:
         response = get_match_data(match, key)
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs.append(participant["championName"])
+                time_ccing += participant["timeCCingOthers"]
 
 
     # Generate all the actual stats
@@ -135,7 +140,7 @@ def main():
     # Gather the square and loading images
     get_champ_images(counts, "square_champs")
     loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image)
+    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, time_ccing)
     print("Finished")
 
 
