@@ -74,7 +74,7 @@ def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs,
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
         f.write(f"\n")
-        f.write(f"<h3> Seconds CCing Enemies: {time_ccing} </h3>\n")
+        f.write(f"<h4> Seconds CCing Enemies: {time_ccing} </h4>\n")
         f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
  
 
