@@ -67,12 +67,13 @@ def get_match_data(match, api_key):
     return match_data.json()
 
 
-def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, time_ccing):
+def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, time_ccing, num_matches):
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
-        f.write("<table align='center'><tr></tr><tr><th><pre>Recently Played Champions\n-------------------------\n")
+        f.write(f"<h1 align='center'> Data from Last {num_matches} Matches </h1>")
+        f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Played Champions\n-------------------------\n")
         for champ in list_of_champs:
-            f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(30, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
+            f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
         f.write(f"\n")
         f.write(f"<h4> Seconds CCing Enemies: {time_ccing} </h4>\n")
         f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
@@ -109,6 +110,9 @@ def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs,
 
 def main():
 
+
+    total_matches_to_look = 20
+
     load_dotenv()
     key = os.getenv("api-key")
     name = json.load(open("config.json"))["Summoner Name"]
@@ -117,7 +121,7 @@ def main():
     id, puuid = get_summoner_identifiers(name, key)
 
     # Get list of match ids which I was part of
-    matches = get_summoners_matches(puuid, key, 0, 10)
+    matches = get_summoners_matches(puuid, key, 0, total_matches_to_look)
     
     # Generate a list of champions that I played in the last x matches
     last_champs = []
@@ -142,7 +146,7 @@ def main():
     # Gather the square and loading images
     get_champ_images(counts, "square_champs")
     loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, time_ccing)
+    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, time_ccing, total_matches_to_look)
     print("Finished")
 
 
