@@ -14,7 +14,7 @@ more text
 </pre></th><th><pre>Most Played
 -----------
 <img align='center' src='loading_images/Akali_9.png' alt='drawing' width='80'/>
-</pre></th></tr></table>
+</pre></th><th>writing</th></tr></table>
 <!---LOL-STATS-END-HERE--->
 
 even more text
