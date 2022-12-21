@@ -85,11 +85,11 @@ def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs,
         # Based on config, populate certain data
         if "Seconds of CC" in extra_info:
             cc = extra_info["Seconds of CC"]
-            f.write(f"<h4> Seconds CCing Enemies: {cc} </h4>")
+            f.write(f"Seconds CCing Enemies: {cc}\n")
         
         if "Rank" in extra_info:
             rank = extra_info["Rank"]
-            f.write(f"<h4> Current Rank: {rank} </h4>")
+            f.write(f"Current Rank: {rank}\n")
 
 
 
