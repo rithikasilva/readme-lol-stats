@@ -5,7 +5,7 @@ Start
 Middle
 
 <!---LOL-STATS-START-HERE--->
-<h2 align='center'> Data from Last 20 Matches </h2><table align='center'><tr></tr><tr><th><pre>Top 5 Recently Played Champions
+<h2 align='center'> Data from Last 20 Matches </h2><table><tr></tr><tr><th><pre>Top 5 Recently Played Champions
 -------------------------
 <img src='square_champs/Neeko.png' alt='drawing' width='20'/> Neeko                   |█████████----------------|  35.00%
 <img src='square_champs/Akali.png' alt='drawing' width='20'/> Akali                   |█████████----------------|  35.00%
@@ -14,7 +14,6 @@ Middle
 <img src='square_champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                 |██-----------------------|   5.00%
 -------------------------
 Seconds CCing Enemies: 329
-Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' alt='drawing' width='20'/>
 Total Abilities Used: 3937
 Total Solokills: 32
 Total Takedowns: 275

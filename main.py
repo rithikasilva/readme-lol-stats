@@ -78,7 +78,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
         f.write(f"<h2 align='center'> Data from Last {num_matches} Matches </h2>")
-        f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Recently Played Champions\n-------------------------\n")
+        f.write(f"<table><tr></tr><tr><th><pre>Top {len(list_of_champs)} Recently Played Champions\n-------------------------\n")
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
         f.write(f"-------------------------\n")
