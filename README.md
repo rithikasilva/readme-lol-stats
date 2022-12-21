@@ -13,8 +13,7 @@ Middle
 <img src='square_champs/Nunu.png' alt='drawing' width='20'/> Nunu                    |██-----------------------|   5.00%
 <img src='square_champs/Taliyah.png' alt='drawing' width='20'/> Taliyah                 |██-----------------------|   5.00%
 
-<h4> Seconds CCing Enemies: 329 </h4>
-</pre></th><th><pre>Last Played
+<h4> Seconds CCing Enemies: 329 </h4><h4> Current Rank: SILVER </h4></pre></th><th><pre>Last Played
 -----------
 <img align='center' src='loading_images/Nunu_0.png' alt='drawing' width='80'/>
 </pre></th></tr></table>

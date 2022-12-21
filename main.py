@@ -37,7 +37,6 @@ def get_loading_image(champ_name, folder):
     return f"{champ_name}_{skin_num}"
 
 
-
 # Given a percentage, generates a string to display a loading bar percentage
 def create_loading_bar(percentage):
     bars = int((percentage / 100) * 25)
@@ -67,7 +66,13 @@ def get_match_data(match, api_key):
     return match_data.json()
 
 
-def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, time_ccing, num_matches):
+def get_summoner_rank(id, api_key):
+    rank_data = requests.get(f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{id}", {"api_key": api_key})
+    rank_data = rank_data.json()
+    return rank_data[0]
+
+def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches):
+
      # Write the actual display content to a temporary file
     with open(temp_file_name, "w", encoding="utf-8") as f:
         f.write(f"<h2 align='center'> Data from Last {num_matches} Matches </h2>")
@@ -75,7 +80,19 @@ def create_played_and_recent_widget(target_file, temp_file_name, list_of_champs,
         for champ in list_of_champs:
             f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
         f.write(f"\n")
-        f.write(f"<h4> Seconds CCing Enemies: {time_ccing} </h4>\n")
+        
+
+        # Based on config, populate certain data
+        if "Seconds of CC" in extra_info:
+            cc = extra_info["Seconds of CC"]
+            f.write(f"<h4> Seconds CCing Enemies: {cc} </h4>")
+        
+        if "Rank" in extra_info:
+            rank = extra_info["Rank"]
+            f.write(f"<h4> Current Rank: {rank} </h4>")
+
+
+
         f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
  
 
@@ -113,12 +130,26 @@ def main():
 
     total_matches_to_look = 20
 
+
+    '''
+    Collect all the required information, but only populate with what is configured.
+    '''
+
+
+
     load_dotenv()
+    extra_data = {}
+
     key = os.getenv("api-key")
-    name = json.load(open("config.json"))["Summoner Name"]
+    config = json.load(open("config.json"))
+    name = config["Summoner Name"]
 
     # Get my id
     id, puuid = get_summoner_identifiers(name, key)
+    rank_data = get_summoner_rank(id, key)
+    print(rank_data)
+    extra_data["Rank"] = rank_data["tier"]
+
 
     # Get list of match ids which I was part of
     matches = get_summoners_matches(puuid, key, 0, total_matches_to_look)
@@ -133,6 +164,9 @@ def main():
                 last_champs.append(participant["championName"])
                 time_ccing += participant["timeCCingOthers"]
 
+ 
+    extra_data["Seconds of CC"] = time_ccing
+
 
     # Generate all the actual stats
     total_length = len(last_champs)
@@ -143,10 +177,15 @@ def main():
 
      
     
+
+    # We can gather all information for 
+
+
+
     # Gather the square and loading images
     get_champ_images(counts, "square_champs")
     loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, time_ccing, total_matches_to_look)
+    create_played_and_recent_widget("README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look)
     print("Finished")
 
 

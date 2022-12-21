@@ -5,5 +5,13 @@
         "Yone": "Dawnbringer Yone",
         "Akali": "K/DA Akali",
         "Taliyah": "Pool Party Taliyah"
+    },
+    "Extra Info": {
+        "Seconds of CC": "True",
+        "Display Rank": "True",
+        "Main Lane": "True",
+        "Ability Count": "True"
+
+
     }
 }
