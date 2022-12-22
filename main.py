@@ -137,7 +137,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
 
          
         # Most Recently Played
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center'     src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
         
 
 
@@ -146,7 +146,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
 
         # Print Mastery
         if "Mastery" in config["Extra Info"]:
-            f.write("<tr><th>Top 3 Champion Masteries<table align='center'>\n")
+            f.write("<tr><th><pre>Top 3 Champion Masteries\n------------------------</pre><table align='center'>\n")
 
             f.write("<tr></tr>\n")
             f.write("<tr>\n")
@@ -211,7 +211,8 @@ def main():
     load_dotenv()
     extra_data = {}
 
-    key = os.getenv("api-key")
+    key = os.getenv("API_KEY")
+
     config = json.load(open("config.json"))
     name = config["Summoner Name"]
 

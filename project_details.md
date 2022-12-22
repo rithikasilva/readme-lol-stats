@@ -10,6 +10,7 @@
 - [x] How many abilities did I use in the last X matches?
 - [x] How many solokills in the last X matches?
 - [x] Total takedowns in the last X matches?
+- [x] What champ(s) do I have the highest mastery on?
 
 ### Extension Questions In Progress/Wanted
 Which questions we actually want answered need to be decided.
@@ -26,5 +27,5 @@ Which questions we actually want answered need to be decided.
 - [ ] Average CS in the first 10 minutes?
 - [ ] Jungle CS in the first 10 minutes?
 - [ ] How many skillshots did I dodge in the last X matches?
-- [x] What champ(s) do I have the highest mastery on?
+
 

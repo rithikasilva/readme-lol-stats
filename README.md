@@ -21,10 +21,11 @@ Total Solokills: 31
 Total Takedowns: 298
 </pre></th><th><pre>Last Played
 -----------
-<img align='center'     src='loading_images/Velkoz_0.png' alt='drawing' width='80'/>
+<img align='center' src='loading_images/Velkoz_0.png' alt='drawing' width='80'/>
 </pre></th></tr>
 <tr></tr>
-<tr><th>Top 3 Champion Masteries<table align='center'>
+<tr><th><pre>Top 3 Champion Masteries
+------------------------</pre><table align='center'>
 <tr></tr>
 <tr>
 <th><pre><img align='center' src='loading_images/Neeko_0.png' alt='drawing' width='80'/></pre></th>
