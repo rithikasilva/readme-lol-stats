@@ -137,19 +137,32 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
 
          
         # Most Recently Played
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>")
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center'     src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
+        
 
+
+        # We need to do this because otherwise we the table will alternate styling
+        f.write("<tr></tr>\n")
 
         # Print Mastery
         if "Mastery" in config["Extra Info"]:
-            f.write("<tr><th><pre>")
+            f.write("<tr><th>Top 3 Champion Masteries<table align='center'>\n")
+
+            f.write("<tr></tr>\n")
+            f.write("<tr>\n")
             for champ in mastery_info:
-                f.write(f"<img align='center' src='loading_images/{champ[1]}.png' alt='drawing' width='80'/> {champ[0]}: {champ[2]}\n")
-        
-            f.write("</pre></th>")
+                f.write(f"<th><pre><img align='center' src='loading_images/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
+            f.write("</tr>\n")
 
 
-        f.write("</tr></table>\n")
+            f.write("<tr></tr>\n")
+            f.write("<tr>\n")
+            for champ in mastery_info:
+                f.write(f"<th><pre>{champ[0]}: {champ[2]}</pre></th>")
+            f.write("</tr>\n")
+            f.write("</table>\n")
+
+        f.write("</th></tr></table>\n")
 
 
 
