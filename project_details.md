@@ -9,6 +9,7 @@
 - [x] For how many seconds did I CC people in the last X matches?
 - [x] How many abilities did I use in the last X matches?
 - [x] How many solokills in the last X matches?
+- [x] Total takedowns in the last X matches?
 
 ### Extension Questions In Progress/Wanted
 Which questions we actually want answered need to be decided.
@@ -24,7 +25,6 @@ Which questions we actually want answered need to be decided.
 - [ ] How many champions did I immobilize in the last X matches?
 - [ ] Average CS in the first 10 minutes?
 - [ ] Jungle CS in the first 10 minutes?
-- [x] Total takedowns in the last X matches?
 - [ ] How many skillshots did I dodge in the last X matches?
 - [x] What champ(s) do I have the highest mastery on?
 

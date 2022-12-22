@@ -37,6 +37,23 @@ def get_loading_image(champ_name, folder):
     return f"{champ_name}_{skin_num}"
 
 
+def get_loading_for_masteries(list_of_champs, folder):
+    image_names = []
+    for champ in list_of_champs:
+        image_names.append(get_loading_image(champ, folder))
+    return image_names
+
+def get_masteries(id, api_key):
+    # Gather Mastery Information
+    mastery_data = requests.get(f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{id}/top", {"api_key": api_key})
+    mastery_data = mastery_data.json()
+    parsed = []
+    for champ in mastery_data:
+        parsed.append({"championId": champ["championId"], "championPoints": champ["championPoints"]})
+    return parsed
+
+
+
 # Given a percentage, generates a string to display a loading bar percentage
 def create_loading_bar(percentage):
     bars = int((percentage / 100) * 25)
@@ -71,7 +88,7 @@ def get_summoner_rank(id, api_key):
     rank_data = rank_data.json()
     return rank_data[0]
 
-def create_played_and_recent_widget(config, target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches):
+def create_played_and_recent_widget(config, target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches, mastery_info):
 
 
 
@@ -118,8 +135,24 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
             f.write(f"Total Takedowns: {take_downs}\n")
          
 
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr></table>\n")
- 
+         
+        # Most Recently Played
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th>")
+
+
+        # Print Mastery
+        if "Mastery" in config["Extra Info"]:
+            f.write("<th><pre>")
+            for champ in mastery_info:
+                f.write(f"<img align='center' src='loading_images/{champ[1]}.png' alt='drawing' width='80'/> {champ[0]}: {champ[2]}\n")
+        
+            f.write("</pre></th>")
+
+
+        f.write("</tr></table>\n")
+
+
+
 
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
@@ -208,21 +241,39 @@ def main():
     # Generate all the actual stats
     total_length = len(last_champs)
     counts = Counter(last_champs)
-    for key in counts:
-        counts[key] = (counts[key] / total_length) * 100
+    for key_counts in counts:
+        counts[key_counts] = (counts[key_counts] / total_length) * 100
     ordered = sorted(counts, key=counts.get, reverse=True)[:5]
 
      
     
+    # Get mastery information
+    champ_id_points = get_masteries(id, key)
+    patch = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
+    latest_version = patch.json()[0]
+    response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion.json")
+    response = response.json()
+    champ_data = response["data"]
+    for id in champ_id_points:
+        for champ in champ_data:
+            if int(champ_data[champ]["key"]) == int(id["championId"]):
+                id["champName"] = champ_data[champ]["name"]
+                break
+    print(champ_id_points)
 
-    # We can gather all information for 
 
+
+
+    list_masteries = [[x["champName"], x["championPoints"]] for x in champ_id_points][:3]
+    mastery_info = [[x[0], get_loading_image(x[0], "loading_images"), x[1]] for x in list_masteries]
+    print(mastery_info)
+ 
 
 
     # Gather the square and loading images
     get_champ_images(counts, "square_champs")
     loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look)
+    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look, mastery_info)
     print("Finished")
 
 
