@@ -137,12 +137,12 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
 
          
         # Most Recently Played
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th>")
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>")
 
 
         # Print Mastery
         if "Mastery" in config["Extra Info"]:
-            f.write("<th><pre>")
+            f.write("<tr><th><pre>")
             for champ in mastery_info:
                 f.write(f"<img align='center' src='loading_images/{champ[1]}.png' alt='drawing' width='80'/> {champ[0]}: {champ[2]}\n")
         

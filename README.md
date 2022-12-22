@@ -20,7 +20,9 @@ Total Takedowns: 298
 </pre></th><th><pre>Last Played
 -----------
 <img align='center' src='loading_images/Velkoz_0.png' alt='drawing' width='80'/>
-</pre></th><th><pre><img align='center' src='loading_images/Neeko_0.png' alt='drawing' width='80'/> Neeko: 133872
+</pre></th></tr>
+<tr><th><pre>
+<img align='center' src='loading_images/Neeko_22.png' alt='drawing' width='80'/> Neeko: 133872
 <img align='center' src='loading_images/Yone_19.png' alt='drawing' width='80'/> Yone: 108926
 <img align='center' src='loading_images/Akali_9.png' alt='drawing' width='80'/> Akali: 88403
 </pre></th></tr></table>
