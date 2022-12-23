@@ -2,3 +2,7 @@
 /project_venv
 /reference_data
 /assets/*.png
+/square_champs/*
+/rank_images/*
+/position_images/*
+/loading_images/*
