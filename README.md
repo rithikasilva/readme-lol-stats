@@ -24,18 +24,6 @@ Total Takedowns: 298
 <img align='center' src='readme-lol-items/Velkoz_0.png' alt='drawing' width='80'/>
 </pre></th></tr>
 <tr></tr>
-<tr><th><pre>Top 3 Champion Masteries
-------------------------</pre><table align='center'>
-<tr></tr>
-<tr>
-<th><pre><img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='80'/></pre></th>
-<th><pre><img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='80'/></pre></th>
-<th><pre><img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='80'/></pre></th>
-</tr>
-<tr></tr>
-<tr>
-<th><pre>Neeko: 133872</pre></th><th><pre>Yone: 108926</pre></th><th><pre>Akali: 88403</pre></th></tr>
-</table>
 </th></tr></table>
 <!---LOL-STATS-END-HERE--->
 

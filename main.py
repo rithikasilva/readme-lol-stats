@@ -150,7 +150,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
         f.write("<tr></tr>\n")
 
         # Print Mastery
-        if "Mastery" in config["Extra Info"]:
+        if "Mastery" in config["Extra Info"] and config["Extra Info"]["Mastery"]:
             f.write("<tr><th><pre>Top 3 Champion Masteries\n------------------------</pre><table align='center'>\n")
 
             f.write("<tr></tr>\n")
