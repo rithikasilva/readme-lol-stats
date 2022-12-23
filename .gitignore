@@ -1,6 +1,5 @@
 .env
 /project_venv
 /reference_data
-/assets/*.png
 /square_champs/*.png
 /loading_images/*.png
