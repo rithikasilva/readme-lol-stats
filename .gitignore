@@ -1,3 +1,4 @@
 .env
 /project_venv
 /reference_data
+/assets/*.png

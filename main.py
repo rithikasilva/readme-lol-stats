@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 import json
 from collections import Counter
+import shutil
 
 # Since we are using a personal key, we have a rate limit of 100 requests/2 minutes
 sleep_time = 0
@@ -97,7 +98,8 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
         f.write(f"<h2 align='center'> Data from Last {num_matches} Matches </h2>")
         f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Recently Played Champions\n-------------------------\n")
         for champ in list_of_champs:
-            f.write(f"<img src='square_champs/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
+            shutil.copyfile(f'square_champs/{champ}.png', f"assets/{champ}.png")
+            f.write(f"<img src='assets/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
         f.write(f"-------------------------\n")
         
 
@@ -108,6 +110,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
         
         if "Rank" in extra_info and "Display Rank" in config["Extra Info"] and config["Extra Info"]["Display Rank"]:
             rank = extra_info["Rank"][0] + extra_info["Rank"][1:].lower()
+            shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'assets/Emblem_{rank}.png')
             f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
 
         if "Most Played Position" in extra_info and "Rank" in extra_info and "Main Lane" in config["Extra Info"] and config["Extra Info"]["Main Lane"]:
@@ -118,6 +121,7 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
             if position == "ARAM":
                 f.write(f"Most Played Position: {common_names[position]}\n")
             else:
+                shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'assets/Position_{rank}-{file_names[position]}.png')
                 f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
 
         # Based on config, populate certain data
@@ -137,7 +141,8 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
 
          
         # Most Recently Played
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='loading_images/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
+        shutil.copyfile(f'loading_images/{recent_champ_img}.png', f'assets/{recent_champ_img}.png')
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='assets/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
         
 
 
@@ -151,7 +156,8 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
             f.write("<tr></tr>\n")
             f.write("<tr>\n")
             for champ in mastery_info:
-                f.write(f"<th><pre><img align='center' src='loading_images/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
+                shutil.copyfile(f'loading_images/{champ[1]}.png', f'assets/{champ[1]}.png')
+                f.write(f"<th><pre><img align='center' src='assets/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
             f.write("</tr>\n")
 
 
