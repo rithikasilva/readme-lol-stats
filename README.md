@@ -37,6 +37,7 @@ Total Takedowns: 298
 <th><pre>Neeko: 133872</pre></th><th><pre>Yone: 108926</pre></th><th><pre>Akali: 88403</pre></th></tr>
 </table>
 </th></tr></table>
+
 <!---LOL-STATS-END-HERE--->
 
 
