@@ -168,8 +168,8 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
             f.write("</tr>\n")
             f.write("</table>\n")
 
-        f.write("</th></tr></table>\n")
-
+        f.write("</th></tr></table>\n\n")
+        #f.write("[By rithikasilva](https://github.com/rithikasilva)\n")
 
 
 
