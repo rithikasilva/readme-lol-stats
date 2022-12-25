@@ -171,8 +171,6 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
 
     for match in list_of_matches:
         response = rf.get_match_data(match, api_key)
-        with open('reference_data/match.json', 'w') as f:
-            f.write(json.dumps(response, indent=4))
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs_played.append(participant["championName"])
