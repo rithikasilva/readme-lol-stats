@@ -62,7 +62,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
-        f.write(f"<h2 align='center'> Data from Last {global_data['Total Matches']} Matches </h2>")
+        f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches </h3>")
         f.write(f"<table align='center'><tr></tr>\n")
         f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
         for champ in main_widget_info['Most Played']:
@@ -227,7 +227,10 @@ def main():
 
 
     extra_data = {}
-    if "Matches" in config: total_matches_to_look = config["Matches"]
+
+    # Add in a check for 0 somehow
+    if "Matches" in config: total_matches_to_look = min(abs(config["Matches"]), 100)
+
     name = config["Summoner Name"]
     id, puuid = rf.get_summoner_identifiers(name, key)
     rank_data = rf.get_summoner_rank(id, key)
@@ -263,7 +266,7 @@ def main():
     main_widget_info = {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
     last_played_widget_info = {"Image": loading_image}
     mastery_widget_info = {"Top Three Data": mastery_info} 
-    target_file = "README.md"
+    target_file = config["Target File"]
     temp_file = "readme_lol_stats.md"
     create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, last_played_widget_info, mastery_widget_info)
     print("Finished")

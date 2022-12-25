@@ -1,13 +1,11 @@
-
-
-Start
+# readme-lol-stats
 
 
 
-Middle
-
+### Example Layout
+Here is an example layout:
 <!---LOL-STATS-START-HERE--->
-<h2 align='center'> Data from Last 10 Matches </h2><table align='center'><tr></tr>
+<h3 align='center'> Data from Last 10 Matches </h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 4 Recently Played Champions
 -------------------------
 <img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina         |█████████████------------|  50.00%
@@ -28,15 +26,6 @@ Total Takedowns: 142
 <img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='50'/> Akali: 89275 
 </pre></th></tr></table>
 <!---LOL-STATS-END-HERE--->
-
-
-
-
-
-
-End
-
-
 
 
 
