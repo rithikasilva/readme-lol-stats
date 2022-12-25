@@ -63,7 +63,8 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
         f.write(f"<h2 align='center'> Data from Last {global_data['Total Matches']} Matches </h2>")
-        f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
+        f.write(f"<table align='center'><tr></tr>\n")
+        f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
         for champ in main_widget_info['Most Played']:
             shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
             f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))

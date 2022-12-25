@@ -7,7 +7,8 @@ Start
 Middle
 
 <!---LOL-STATS-START-HERE--->
-<h2 align='center'> Data from Last 10 Matches </h2><table align='center'><tr></tr><tr><th><pre>Top 4 Recently Played Champions
+<h2 align='center'> Data from Last 10 Matches </h2><table align='center'><tr></tr>
+<tr align='left'><th><pre>Top 4 Recently Played Champions
 -------------------------
 <img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina                |█████████████------------|  50.00%
 <img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko                   |████████-----------------|  30.00%
