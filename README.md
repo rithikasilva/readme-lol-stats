@@ -27,7 +27,7 @@ Total Takedowns: 142
 </pre></th></tr></table>
 <h6 align='center'>
 
-widget by [rithikasiilva](https://github.com/rithikasilva)
+[README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
 </h6>
 <!---LOL-STATS-END-HERE--->
 

@@ -117,10 +117,10 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         f.write(f"</tr></table>\n")
 
-
-        f.write("<h6 align='center'>\n\n")
-        f.write("widget by [rithikasiilva](https://github.com/rithikasilva)\n")
-        f.write("</h6>\n")
+        if "Toggle Credit" in config and config["Toggle Credit"]:
+            f.write("<h6 align='center'>\n\n")
+            f.write("[README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
+            f.write("</h6>\n")
 
 
     # Copy the generated widget to the correct file and delete temporary file
