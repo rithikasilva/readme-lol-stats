@@ -117,14 +117,15 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         f.write(f"</tr></table>\n")
 
-       
+
+        f.write("<h6 align='center'>\n\n")
+        f.write("widget by [rithikasiilva](https://github.com/rithikasilva)\n")
+        f.write("</h6>\n")
+
 
     # Copy the generated widget to the correct file and delete temporary file
     copy_file_contents_to_destination(target_file, temp_file)
     os.remove(temp_file)
-
-
-
 
 
     

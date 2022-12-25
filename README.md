@@ -25,7 +25,10 @@ Total Takedowns: 142
 <img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='50'/> Yone: 108926 
 <img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='50'/> Akali: 89275 
 </pre></th></tr></table>
-<p align="center">widget by <p><p align="center">[rithikasilva](https://github.com/rithikasilva)</p>
+<h6 align='center'>
+
+widget by [rithikasiilva](https://github.com/rithikasilva)
+</h6>
 <!---LOL-STATS-END-HERE--->
 
 
