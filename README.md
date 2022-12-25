@@ -19,6 +19,11 @@ Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' 
 Total Abilities Used: 1829
 Total Solokills: 19
 Total Takedowns: 142
+KDA: 70/59/72
+Pentakills: 0
+Pentakills: 0
+Pentakills: 1
+Pentakills: 7
 </pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
 <img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='50'/> Neeko: 136216 

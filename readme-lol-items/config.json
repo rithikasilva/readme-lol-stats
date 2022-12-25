@@ -17,6 +17,12 @@
         "Ability Count": 1,
         "Solokills": 1,
         "Takedowns": 1,
-        "Mastery": 1
+        "Mastery": 1,
+        "K/D/A": 1,
+        "Pentakills": 1,
+        "Quadrakills": 1,
+        "Triplekills": 1,
+        "Doublekills": 1
+
     }
 }

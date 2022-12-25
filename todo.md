@@ -11,12 +11,14 @@
 - [x] How many solokills in the last X matches?
 - [x] Total takedowns in the last X matches?
 - [x] What champ(s) do I have the highest mastery on?
+- [x] What is my KDA?
+- [x] How many pentakills did I get in the last X matches?
+- [x] How many quadrakills did I get in the last X matches?
+- [x] How many triplekills did I get in the last X matches?
+- [x] How many doublekills did I get in the last X matches?
 
 ### Extension Questions In Progress/Wanted
 Which questions we actually want answered need to be decided.
-- [ ] How many pentakills did I get in the last X matches?
-- [ ] How many quadrakills did I get in the last X matches?
-- [ ] How many triplekills did I get in the last X matches?
 - [ ] How long did I play for in the last X matches?
 - [ ] How long was I grey screen for in the last X matches?
 - [ ] How many _______ pings did I give in the last X matches?
@@ -27,6 +29,8 @@ Which questions we actually want answered need to be decided.
 - [ ] Average CS in the first 10 minutes?
 - [ ] Jungle CS in the first 10 minutes?
 - [ ] How many skillshots did I dodge in the last X matches?
+- [ ] Total minions killed/time (averge cs/min across X matches)?
+
 
 
 

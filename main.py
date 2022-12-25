@@ -56,7 +56,7 @@ def copy_file_contents_to_destination(target_file, source_file):
 
 
 
-def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, last_played_widget_info, mastery_widget_info):
+def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
 
 
 
@@ -71,17 +71,17 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         f.write(f"-------------------------\n")
         
 
-        # Based on config, populate certain data
-        if "Seconds of CC" in main_widget_info["Extra"] and "Seconds of CC" in config["Extra Info"] and config["Extra Info"]["Seconds of CC"]:
+        # Main Window Extra Info
+        if config["Extra Info"].get("Seconds of CC"):
             cc = main_widget_info["Extra"]["Seconds of CC"]
             f.write(f"Seconds CCing Enemies: {cc}\n")
         
-        if "Rank" in main_widget_info["Extra"] and "Display Rank" in config["Extra Info"] and config["Extra Info"]["Display Rank"]:
+        if config["Extra Info"].get("Display Rank"):
             rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
             shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'readme-lol-items/Emblem_{rank}.png')
             f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
 
-        if "Most Played Position" in main_widget_info["Extra"] and "Rank" in main_widget_info["Extra"] and "Main Lane" in config["Extra Info"] and config["Extra Info"]["Main Lane"]:
+        if config["Extra Info"].get("Main Lane"):
             position = main_widget_info["Extra"]["Most Played Position"]
             common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support"}
             file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
@@ -92,22 +92,39 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
                 shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
                 f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
 
-        # Based on config, populate certain data
-        if "Ability Count" in main_widget_info["Extra"] and "Ability Count" in config["Extra Info"] and config["Extra Info"]["Ability Count"]:
+        if config["Extra Info"].get("Ability Count"):
             count = main_widget_info["Extra"]["Ability Count"]
             f.write(f"Total Abilities Used: {count}\n")
 
-
-        if "Solokills" in main_widget_info["Extra"] and "Solokills" in config["Extra Info"] and config["Extra Info"]["Solokills"]:
+        if config["Extra Info"].get("Solokills"):
             solokills = main_widget_info["Extra"]["Solokills"]
             f.write(f"Total Solokills: {solokills}\n")
         
-        if "Takedowns" in main_widget_info["Extra"] and "Takedowns" in config["Extra Info"] and config["Extra Info"]["Takedowns"]:
+        if config["Extra Info"].get("Takedowns"):
             take_downs = main_widget_info["Extra"]["Takedowns"]
-            f.write(f"Total Takedowns: {take_downs}\n</pre></th>")
-         
+            f.write(f"Total Takedowns: {take_downs}\n")
+        
+        if config["Extra Info"].get("K/D/A"):
+            f.write(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}\n")
 
-        if "Mastery" in config["Extra Info"] and config["Extra Info"]["Mastery"]:
+        if config["Extra Info"].get("Pentakills"):
+            f.write(f"Pentakills: {main_widget_info['Extra']['Pentakills']}\n")
+
+        if config["Extra Info"].get("Quadrakills"):
+            f.write(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}\n")
+
+        if config["Extra Info"].get("Triplekills"):
+            f.write(f"Triplekills: {main_widget_info['Extra']['Triplekills']}\n")
+
+        if config["Extra Info"].get("Doublekills"):
+            f.write(f"Doublekills: {main_widget_info['Extra']['Doublekills']}\n")
+
+
+
+        f.write("</pre></th>")
+
+        # Master Section Info
+        if config["Extra Info"].get("Mastery"):
             f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
             for champ in mastery_widget_info['Top Three Data']:
                 shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
@@ -117,7 +134,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         f.write(f"</tr></table>\n")
 
-        if "Toggle Credit" in config and config["Toggle Credit"]:
+        if config.get("Toggle Credit"):
             f.write("<h6 align='center'>\n\n")
             f.write("[README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
             f.write("</h6>\n")
@@ -142,8 +159,20 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     solo_kills = 0
     take_downs = 0
 
+    global_kills = 0
+    global_deaths = 0
+    global_assists = 0
+
+    pentakills = 0
+    quadrakills = 0
+    triplekills = 0
+    doublekills = 0
+
+
     for match in list_of_matches:
         response = rf.get_match_data(match, api_key)
+        with open('reference_data/match.json', 'w') as f:
+            f.write(json.dumps(response, indent=4))
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs_played.append(participant["championName"])
@@ -152,6 +181,17 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
                 time_ccing += participant["timeCCingOthers"]
                 solo_kills += participant["challenges"]["soloKills"]
                 take_downs += participant["challenges"]["takedowns"]
+
+                global_kills += participant["kills"]
+                global_deaths += participant["deaths"]
+                global_assists += participant["assists"]
+
+                pentakills += participant["pentaKills"]
+                quadrakills += participant["quadraKills"]
+                triplekills += participant["tripleKills"]
+                doublekills += participant["doubleKills"]
+
+
         time.sleep(1)
 
 
@@ -162,7 +202,14 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     if extra_data["Most Played Position"] == "Invalid": extra_data["Most Played Position"] = "ARAM"
     extra_data["Seconds of CC"] = time_ccing
 
+    extra_data["Kills"] = global_kills
+    extra_data["Deaths"] = global_deaths
+    extra_data["Assists"] = global_assists
 
+    extra_data["Pentakills"] = pentakills
+    extra_data["Quadrakills"] = quadrakills
+    extra_data["Triplekills"] = triplekills
+    extra_data["Doublekills"] = doublekills
 
 
     # Generates the information for the 5 most played champions
@@ -173,7 +220,7 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     recent_most_played = sorted(played_percentage, key=played_percentage.get, reverse=True)[:5]
 
 
-    return extra_data, last_champs_played, recent_most_played, played_percentage
+    return {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
 
 
 
@@ -195,7 +242,7 @@ def get_mastery_section_data(id, api_key):
 
     list_masteries = [[x["champName"], x["championPoints"]] for x in champ_id_points][:3]
     mastery_info = [[x[0], dd.get_loading_image(x[0], "loading_images"), x[1]] for x in list_masteries]
-    return mastery_info
+    return {"Top Three Data": mastery_info}
 
 
 
@@ -236,7 +283,7 @@ def main():
     id, puuid = rf.get_summoner_identifiers(name, key)
     rank_data = rf.get_summoner_rank(id, key)
     extra_data["Rank"] = rank_data["tier"]
-
+    global_data = {"Total Matches":  total_matches_to_look}
 
 
 
@@ -246,30 +293,28 @@ def main():
 
 
     # Returns the extra_data and a reverse list of the recently played champions
-    extra_data, last_champs_played, recent_most_played, played_percentage = get_main_section_data(puuid, key, extra_data, matches)
+    main_widget_info = get_main_section_data(puuid, key, extra_data, matches)
 
 
     # Get Mastery Info
-    mastery_info = get_mastery_section_data(id, key)
+    mastery_widget_info = get_mastery_section_data(id, key)
 
      
 
  
     # Gather the square and loading images
-    dd.get_champ_images(played_percentage, "square_champs")
-    loading_image = dd.get_loading_image(last_champs_played[0], "loading_images")
+    dd.get_champ_images(main_widget_info["Most Played"], "square_champs")
+    #loading_image = dd.get_loading_image(last_champs_played[0], "loading_images")
 
 
 
 
     # Organize data and create widget
-    global_data = {"Total Matches":  total_matches_to_look}
-    main_widget_info = {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
-    last_played_widget_info = {"Image": loading_image}
-    mastery_widget_info = {"Top Three Data": mastery_info} 
+    #last_played_widget_info = {"Image": loading_image}
+    
     target_file = config["Target File"]
     temp_file = "readme_lol_stats.md"
-    create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, last_played_widget_info, mastery_widget_info)
+    create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
     print("Finished")
 
 
