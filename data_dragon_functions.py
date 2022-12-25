@@ -47,4 +47,11 @@ def get_champion_data():
 
 
 
+def get_longest_name():
+    data = get_champion_data()
+    names = []
+    for id in data:
+        names.append(data[id]["name"])
+    longest = len(max(names, key=len))
+    return longest
 

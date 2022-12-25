@@ -10,10 +10,10 @@ Middle
 <h2 align='center'> Data from Last 10 Matches </h2><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 4 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina                |█████████████------------|  50.00%
-<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko                   |████████-----------------|  30.00%
-<img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali                   |███----------------------|  10.00%
-<img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/> Taliyah                 |███----------------------|  10.00%
+<img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina         |█████████████------------|  50.00%
+<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko            |████████-----------------|  30.00%
+<img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali            |███----------------------|  10.00%
+<img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/> Taliyah          |███----------------------|  10.00%
 -------------------------
 Seconds CCing Enemies: 131
 Current Rank: Silver <img src='rank_images/Emblem_Silver.png' alt='drawing' width='20'/>
