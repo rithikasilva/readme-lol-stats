@@ -24,93 +24,12 @@ def create_loading_bar(percentage):
     return out
 
 
-def create_played_and_recent_widget(config, target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches, mastery_info):
 
 
-
-     # Write the actual display content to a temporary file
-    with open(temp_file_name, "w", encoding="utf-8") as f:
-        f.write(f"<h2 align='center'> Data from Last {num_matches} Matches </h2>")
-        f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(list_of_champs)} Recently Played Champions\n-------------------------\n")
-        for champ in list_of_champs:
-            shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
-            f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(dict_of_data[champ]) + f"{round(dict_of_data[champ], 2): .2f}%\n".rjust(9, " "))
-        f.write(f"-------------------------\n")
-        
-
-        # Based on config, populate certain data
-        if "Seconds of CC" in extra_info and "Seconds of CC" in config["Extra Info"] and config["Extra Info"]["Seconds of CC"]:
-            cc = extra_info["Seconds of CC"]
-            f.write(f"Seconds CCing Enemies: {cc}\n")
-        
-        if "Rank" in extra_info and "Display Rank" in config["Extra Info"] and config["Extra Info"]["Display Rank"]:
-            rank = extra_info["Rank"][0] + extra_info["Rank"][1:].lower()
-            shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'readme-lol-items/Emblem_{rank}.png')
-            f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
-
-        if "Most Played Position" in extra_info and "Rank" in extra_info and "Main Lane" in config["Extra Info"] and config["Extra Info"]["Main Lane"]:
-            position = extra_info["Most Played Position"]
-            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support"}
-            file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
-            rank = extra_info["Rank"][0] + extra_info["Rank"][1:].lower()
-            if position == "ARAM":
-                f.write(f"Most Played Position: {common_names[position]}\n")
-            else:
-                shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
-                f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
-
-        # Based on config, populate certain data
-        if "Ability Count" in extra_info and "Ability Count" in config["Extra Info"] and config["Extra Info"]["Ability Count"]:
-            count = extra_info["Ability Count"]
-            f.write(f"Total Abilities Used: {count}\n")
-
-
-        if "Solokills" in extra_info and "Solokills" in config["Extra Info"] and config["Extra Info"]["Solokills"]:
-            solokills = extra_info["Solokills"]
-            f.write(f"Total Solokills: {solokills}\n")
-        
-        if "Takedowns" in extra_info and "Takedowns" in config["Extra Info"] and config["Extra Info"]["Takedowns"]:
-            take_downs = extra_info["Takedowns"]
-            f.write(f"Total Takedowns: {take_downs}\n")
-         
-
-         
-        # Most Recently Played
-        shutil.copyfile(f'loading_images/{recent_champ_img}.png', f'readme-lol-items/{recent_champ_img}.png')
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='readme-lol-items/{recent_champ_img}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
-        
-
-
-        # We need to do this because otherwise we the table will alternate styling
-        f.write("<tr></tr>\n")
-
-        # Print Mastery
-        if "Mastery" in config["Extra Info"] and config["Extra Info"]["Mastery"]:
-            f.write("<tr><th><pre>Top 3 Champion Masteries\n------------------------</pre><table align='center'>\n")
-
-            f.write("<tr></tr>\n")
-            f.write("<tr>\n")
-            for champ in mastery_info:
-                shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
-                f.write(f"<th><pre><img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
-            f.write("</tr>\n")
-
-
-            f.write("<tr></tr>\n")
-            f.write("<tr>\n")
-            for champ in mastery_info:
-                f.write(f"<th><pre>{champ[0]}: {champ[2]}</pre></th>")
-            f.write("</tr>\n")
-            f.write("</table>\n")
-
-        f.write("</th></tr></table>\n\n")
-        #f.write("[By rithikasilva](https://github.com/rithikasilva)\n")
-
-
-
+def copy_file_contents_to_destination(target_file, source_file):
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
-    readme_lol_stats_file = open(temp_file_name, encoding='utf-8').readlines()
+    readme_lol_stats_file = open(source_file, encoding='utf-8').readlines()
 
     # Parse target file to see where to put widget
     final_output = []
@@ -134,9 +53,105 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
         for line in final_output:
             f.write(line)
 
-    os.remove(temp_file_name)
 
 
+
+def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, last_played_widget_info, mastery_widget_info):
+
+
+
+     # Write the actual display content to a temporary file
+    with open(temp_file, "w", encoding="utf-8") as f:
+        f.write(f"<h2 align='center'> Data from Last {global_data['Total Matches']} Matches </h2>")
+        f.write(f"<table align='center'><tr></tr><tr><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
+        for champ in main_widget_info['Most Played']:
+            shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
+            f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(25, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
+        f.write(f"-------------------------\n")
+        
+
+        # Based on config, populate certain data
+        if "Seconds of CC" in main_widget_info["Extra"] and "Seconds of CC" in config["Extra Info"] and config["Extra Info"]["Seconds of CC"]:
+            cc = main_widget_info["Extra"]["Seconds of CC"]
+            f.write(f"Seconds CCing Enemies: {cc}\n")
+        
+        if "Rank" in main_widget_info["Extra"] and "Display Rank" in config["Extra Info"] and config["Extra Info"]["Display Rank"]:
+            rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
+            shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'readme-lol-items/Emblem_{rank}.png')
+            f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
+
+        if "Most Played Position" in main_widget_info["Extra"] and "Rank" in main_widget_info["Extra"] and "Main Lane" in config["Extra Info"] and config["Extra Info"]["Main Lane"]:
+            position = main_widget_info["Extra"]["Most Played Position"]
+            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support"}
+            file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
+            rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
+            if position == "ARAM":
+                f.write(f"Most Played Position: {common_names[position]}\n")
+            else:
+                shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
+                f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
+
+        # Based on config, populate certain data
+        if "Ability Count" in main_widget_info["Extra"] and "Ability Count" in config["Extra Info"] and config["Extra Info"]["Ability Count"]:
+            count = main_widget_info["Extra"]["Ability Count"]
+            f.write(f"Total Abilities Used: {count}\n")
+
+
+        if "Solokills" in main_widget_info["Extra"] and "Solokills" in config["Extra Info"] and config["Extra Info"]["Solokills"]:
+            solokills = main_widget_info["Extra"]["Solokills"]
+            f.write(f"Total Solokills: {solokills}\n")
+        
+        if "Takedowns" in main_widget_info["Extra"] and "Takedowns" in config["Extra Info"] and config["Extra Info"]["Takedowns"]:
+            take_downs = main_widget_info["Extra"]["Takedowns"]
+            f.write(f"Total Takedowns: {take_downs}\n")
+         
+
+         
+        # Most Recently Played
+        shutil.copyfile(f"loading_images/{last_played_widget_info['Image']}.png", f"readme-lol-items/{last_played_widget_info['Image']}.png")
+        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='readme-lol-items/{last_played_widget_info['Image']}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
+        
+
+
+        # We need to do this because otherwise we the table will alternate styling
+        f.write("<tr></tr>\n")
+
+        # Print Mastery
+        if "Mastery" in config["Extra Info"] and config["Extra Info"]["Mastery"]:
+            f.write("<tr><th><pre>Top 3 Champion Masteries\n------------------------</pre><table align='center'>\n")
+
+            f.write("<tr></tr>\n")
+            f.write("<tr>\n")
+            for champ in mastery_widget_info['Top Three Data']:
+                shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
+                f.write(f"<th><pre><img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
+            f.write("</tr>\n")
+
+
+            f.write("<tr></tr>\n")
+            f.write("<tr>\n")
+            for champ in mastery_widget_info["Top Three Data"]:
+                f.write(f"<th><pre>{champ[0]}: {champ[2]}</pre></th>")
+            f.write("</tr>\n")
+            f.write("</table>\n")
+
+        f.write("</th></tr></table>\n\n")
+        #f.write("[By rithikasilva](https://github.com/rithikasilva)\n")
+
+
+
+
+
+
+    # Copy the generated widget to the correct file and delete temporary file
+    copy_file_contents_to_destination(target_file, temp_file)
+    os.remove(temp_file)
+
+
+
+
+
+    
 '''
 Generates data for the main widget
 '''
@@ -175,13 +190,13 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
 
     # Generates the information for the 5 most played champions
     total_length = len(last_champs_played)
-    five_played_percentage = Counter(last_champs_played)
-    for key_counts in five_played_percentage:
-        five_played_percentage[key_counts] = (five_played_percentage[key_counts] / total_length) * 100
-    five_most_played = sorted(five_played_percentage, key=five_played_percentage.get, reverse=True)[:5]
+    played_percentage = Counter(last_champs_played)
+    for key_counts in played_percentage:
+        played_percentage[key_counts] = (played_percentage[key_counts] / total_length) * 100
+    recent_most_played = sorted(played_percentage, key=played_percentage.get, reverse=True)[:5]
 
 
-    return extra_data, last_champs_played, five_most_played, five_played_percentage
+    return extra_data, last_champs_played, recent_most_played, played_percentage
 
 
 
@@ -211,10 +226,10 @@ def get_mastery_section_data(id, api_key):
 
 
 
-def main():
 
-    # Max is 100
-    total_matches_to_look = 100
+def main():
+    total_matches_to_look = 10
+    
 
 
     '''
@@ -223,13 +238,20 @@ def main():
 
 
     load_dotenv()
-    extra_data = {}
+    
+
 
 
 
     key = os.getenv("API_KEY")
     config = json.load(open("readme-lol-items/config.json"))
 
+
+
+
+
+    extra_data = {}
+    if "Matches" in config: total_matches_to_look = config["Matches"]
     name = config["Summoner Name"]
     id, puuid = rf.get_summoner_identifiers(name, key)
     rank_data = rf.get_summoner_rank(id, key)
@@ -238,16 +260,13 @@ def main():
 
 
 
-
+    # Get list of matches for the given user
     matches = rf.get_summoners_matches(puuid, key, 0, total_matches_to_look)
     
 
 
-
-
     # Returns the extra_data and a reverse list of the recently played champions
-    extra_data, last_champs_played, five_most_played, five_played_percentage = get_main_section_data(puuid, key, extra_data, matches)
-
+    extra_data, last_champs_played, recent_most_played, played_percentage = get_main_section_data(puuid, key, extra_data, matches)
 
 
     # Get Mastery Info
@@ -255,22 +274,22 @@ def main():
 
      
 
-    '''
-    last_champs: list of champ names from last played to nth played
-    ordered: list of five champ names from most played to least
-    mastery_info [["champname", "specific_loading_image", mastery_score]]
-    counts: {'champname': percentage}
-    '''
-
-
+ 
     # Gather the square and loading images
-    dd.get_champ_images(five_played_percentage, "square_champs")
+    dd.get_champ_images(played_percentage, "square_champs")
     loading_image = dd.get_loading_image(last_champs_played[0], "loading_images")
 
 
 
-    # CREATE THE WIDGET
-    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", five_most_played, five_played_percentage, loading_image, extra_data, total_matches_to_look, mastery_info)
+
+    # Organize data and create widget
+    global_data = {"Total Matches":  total_matches_to_look}
+    main_widget_info = {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data}
+    last_played_widget_info = {"Image": loading_image}
+    mastery_widget_info = {"Top Three Data": mastery_info} 
+    target_file = "README.md"
+    temp_file = "readme_lol_stats.md"
+    create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, last_played_widget_info, mastery_widget_info)
     print("Finished")
 
 

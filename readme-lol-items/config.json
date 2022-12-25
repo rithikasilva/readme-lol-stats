@@ -1,5 +1,6 @@
 {
     "Summoner Name": "R1tzcrackers",
+    "Matches": 10,
     "Skin Substitutions": {
         "Yasuo": "Nightbringer Yasuo",
         "Yone": "Dawnbringer Yone",
@@ -9,8 +10,8 @@
     },
     "Extra Info": {
         "Seconds of CC": 1,
-        "Display Rank": 0,
-        "Main Lane": 0,
+        "Display Rank": 1,
+        "Main Lane": 1,
         "Ability Count": 1,
         "Solokills": 1,
         "Takedowns": 1,

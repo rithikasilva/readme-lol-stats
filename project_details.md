@@ -29,3 +29,9 @@ Which questions we actually want answered need to be decided.
 - [ ] How many skillshots did I dodge in the last X matches?
 
 
+
+
+
+
+### General TODO
+- [ ] Ensuure graceful failure if any request is not met properly
