@@ -103,45 +103,20 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         
         if "Takedowns" in main_widget_info["Extra"] and "Takedowns" in config["Extra Info"] and config["Extra Info"]["Takedowns"]:
             take_downs = main_widget_info["Extra"]["Takedowns"]
-            f.write(f"Total Takedowns: {take_downs}\n")
+            f.write(f"Total Takedowns: {take_downs}\n</pre></th>")
          
 
-         
-        # Most Recently Played
-        shutil.copyfile(f"loading_images/{last_played_widget_info['Image']}.png", f"readme-lol-items/{last_played_widget_info['Image']}.png")
-        f.write(f"</pre></th><th><pre>Last Played\n-----------\n<img align='center' src='readme-lol-items/{last_played_widget_info['Image']}.png' alt='drawing' width='80'/>\n</pre></th></tr>\n")
-        
-
-
-        # We need to do this because otherwise we the table will alternate styling
-        f.write("<tr></tr>\n")
-
-        # Print Mastery
         if "Mastery" in config["Extra Info"] and config["Extra Info"]["Mastery"]:
-            f.write("<tr><th><pre>Top 3 Champion Masteries\n------------------------</pre><table align='center'>\n")
-
-            f.write("<tr></tr>\n")
-            f.write("<tr>\n")
+            f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
             for champ in mastery_widget_info['Top Three Data']:
                 shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
-                f.write(f"<th><pre><img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='80'/></pre></th>\n")
-            f.write("</tr>\n")
+                f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
+                f.write(f"{champ[0]}: {champ[2]} \n")
+            f.write(f"</pre></th>")
 
+        f.write(f"</tr></table>\n")
 
-            f.write("<tr></tr>\n")
-            f.write("<tr>\n")
-            for champ in mastery_widget_info["Top Three Data"]:
-                f.write(f"<th><pre>{champ[0]}: {champ[2]}</pre></th>")
-            f.write("</tr>\n")
-            f.write("</table>\n")
-
-        f.write("</th></tr></table>\n\n")
-        #f.write("[By rithikasilva](https://github.com/rithikasilva)\n")
-
-
-
-
-
+       
 
     # Copy the generated widget to the correct file and delete temporary file
     copy_file_contents_to_destination(target_file, temp_file)

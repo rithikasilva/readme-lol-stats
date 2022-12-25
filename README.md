@@ -20,25 +20,12 @@ Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' 
 Total Abilities Used: 1829
 Total Solokills: 19
 Total Takedowns: 142
-</pre></th><th><pre>Last Played
------------
-<img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='80'/>
-</pre></th></tr>
-<tr></tr>
-<tr><th><pre>Top 3 Champion Masteries
-------------------------</pre><table align='center'>
-<tr></tr>
-<tr>
-<th><pre><img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='80'/></pre></th>
-<th><pre><img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='80'/></pre></th>
-<th><pre><img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='80'/></pre></th>
-</tr>
-<tr></tr>
-<tr>
-<th><pre>Neeko: 136216</pre></th><th><pre>Yone: 108926</pre></th><th><pre>Akali: 89275</pre></th></tr>
-</table>
-</th></tr></table>
-
+</pre></th><th><pre>Top 3 Champion Masteries
+------------------------
+<img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='50'/> Neeko: 136216 
+<img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='50'/> Yone: 108926 
+<img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='50'/> Akali: 89275 
+</pre></th></tr></table>
 <!---LOL-STATS-END-HERE--->
 
 
