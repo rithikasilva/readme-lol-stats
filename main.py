@@ -4,54 +4,10 @@ import os
 import json
 from collections import Counter
 import shutil
+import data_dragon_functions as dd
+import riot_api_functions as rf
+import time
 
-# Since we are using a personal key, we have a rate limit of 100 requests/2 minutes
-sleep_time = 0
-
-# Gets square impage
-def get_champ_images(list_of_champs, folder):
-    # Get the latest patch
-    version = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
-    latest_version = version.json()[0]
-    # Get images of each champion
-    for champ in list_of_champs:
-        champ_image = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/img/champion/{champ}.png")
-        open(f"{folder}/{champ}.png", "wb").write(champ_image.content)
-
-
-# Gets the loading screen image of a champion and saves to folder
-def get_loading_image(champ_name, folder):
-    config = json.load(open("readme-lol-items/config.json"))
-    skin_num = 0
-    if champ_name in config["Skin Substitutions"]:
-        version = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
-        latest_version = version.json()[0]
-        # Get the specific skin
-        champion_data = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion/{champ_name}.json")
-        data = champion_data.json()
-        for skin in data["data"][champ_name]["skins"]:
-            if skin["name"].lower() == config["Skin Substitutions"][champ_name].lower():
-                skin_num = skin["num"]
-    # Get most played champ image
-    loading_image = requests.get(f"https://ddragon.leagueoflegends.com/cdn/img/champion/loading/{champ_name}_{skin_num}.jpg")
-    open(f"{folder}/{champ_name}_{skin_num}.png", "wb").write(loading_image.content)
-    return f"{champ_name}_{skin_num}"
-
-
-def get_loading_for_masteries(list_of_champs, folder):
-    image_names = []
-    for champ in list_of_champs:
-        image_names.append(get_loading_image(champ, folder))
-    return image_names
-
-def get_masteries(id, api_key):
-    # Gather Mastery Information
-    mastery_data = requests.get(f"https://na1.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/{id}/top", {"api_key": api_key})
-    mastery_data = mastery_data.json()
-    parsed = []
-    for champ in mastery_data:
-        parsed.append({"championId": champ["championId"], "championPoints": champ["championPoints"]})
-    return parsed
 
 
 
@@ -67,27 +23,6 @@ def create_loading_bar(percentage):
     out = out + "|"
     return out
 
-
-def get_summoner_identifiers(name, api_key):
-    summoner_values = requests.get(f"https://na1.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}", {"api_key": api_key})
-    data = summoner_values.json()
-    return data["id"], data["puuid"]
-
-
-def get_summoners_matches(puuid, api_key, start, count):
-    matches = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids", {"api_key": api_key, "start": start, "count": count})
-    return matches.json()
-
-
-def get_match_data(match, api_key):
-    match_data = requests.get(f"https://americas.api.riotgames.com/lol/match/v5/matches/{match}", {"api_key": api_key})
-    return match_data.json()
-
-
-def get_summoner_rank(id, api_key):
-    rank_data = requests.get(f"https://na1.api.riotgames.com/lol/league/v4/entries/by-summoner/{id}", {"api_key": api_key})
-    rank_data = rank_data.json()
-    return rank_data[0]
 
 def create_played_and_recent_widget(config, target_file, temp_file_name, list_of_champs, dict_of_data, recent_champ_img, extra_info, num_matches, mastery_info):
 
@@ -202,53 +137,30 @@ def create_played_and_recent_widget(config, target_file, temp_file_name, list_of
     os.remove(temp_file_name)
 
 
-def main():
-
-
-    total_matches_to_look = 20
-
-
-    '''
-    Collect all the required information, but only populate with what is configured.
-    '''
-
-
-
-
-    load_dotenv()
-    extra_data = {}
-
-    key = os.getenv("API_KEY")
-
-    config = json.load(open("readme-lol-items/config.json"))
-    name = config["Summoner Name"]
-
-    # Get my id
-    id, puuid = get_summoner_identifiers(name, key)
-    rank_data = get_summoner_rank(id, key)
-    extra_data["Rank"] = rank_data["tier"]
-
-
-    # Get list of match ids which I was part of
-    matches = get_summoners_matches(puuid, key, 0, total_matches_to_look)
-    
+'''
+Generates data for the main widget
+'''
+def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     # Generate a list of champions that I played in the last x matches
-    last_champs = []
-    time_ccing = 0
+    last_champs_played = []
     played_positions = []
+
+    time_ccing = 0
     ability_usage = 0
     solo_kills = 0
     take_downs = 0
-    for match in matches:
-        response = get_match_data(match, key)
+
+    for match in list_of_matches:
+        response = rf.get_match_data(match, api_key)
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
-                last_champs.append(participant["championName"])
+                last_champs_played.append(participant["championName"])
                 ability_usage += participant["challenges"]["abilityUses"]
                 played_positions.append(participant["individualPosition"])
                 time_ccing += participant["timeCCingOthers"]
                 solo_kills += participant["challenges"]["soloKills"]
                 take_downs += participant["challenges"]["takedowns"]
+        time.sleep(1)
 
 
     extra_data["Takedowns"] = take_downs
@@ -259,43 +171,109 @@ def main():
     extra_data["Seconds of CC"] = time_ccing
 
 
-    # Generate all the actual stats
-    total_length = len(last_champs)
-    counts = Counter(last_champs)
-    for key_counts in counts:
-        counts[key_counts] = (counts[key_counts] / total_length) * 100
-    ordered = sorted(counts, key=counts.get, reverse=True)[:5]
 
-     
-    
+
+    # Generates the information for the 5 most played champions
+    total_length = len(last_champs_played)
+    five_played_percentage = Counter(last_champs_played)
+    for key_counts in five_played_percentage:
+        five_played_percentage[key_counts] = (five_played_percentage[key_counts] / total_length) * 100
+    five_most_played = sorted(five_played_percentage, key=five_played_percentage.get, reverse=True)[:5]
+
+
+    return extra_data, last_champs_played, five_most_played, five_played_percentage
+
+
+
+
+
+'''
+Generate data for the mastery widget
+'''
+def get_mastery_section_data(id, api_key):
     # Get mastery information
-    champ_id_points = get_masteries(id, key)
-    patch = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
-    latest_version = patch.json()[0]
-    response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{latest_version}/data/en_US/champion.json")
-    response = response.json()
-    champ_data = response["data"]
+    champ_id_points = rf.get_masteries(id, api_key)
+    champ_data = dd.get_champion_data()
+
     for id in champ_id_points:
         for champ in champ_data:
             if int(champ_data[champ]["key"]) == int(id["championId"]):
                 id["champName"] = champ_data[champ]["name"]
                 break
-    print(champ_id_points)
-
-
-
 
     list_masteries = [[x["champName"], x["championPoints"]] for x in champ_id_points][:3]
-    mastery_info = [[x[0], get_loading_image(x[0], "loading_images"), x[1]] for x in list_masteries]
-    print(mastery_info)
- 
+    mastery_info = [[x[0], dd.get_loading_image(x[0], "loading_images"), x[1]] for x in list_masteries]
+    return mastery_info
+
+
+
+
+
+
+
+def main():
+
+    # Max is 100
+    total_matches_to_look = 100
+
+
+    '''
+    Collect all the required information, but only populate with what is configured.
+    '''
+
+
+    load_dotenv()
+    extra_data = {}
+
+
+
+    key = os.getenv("API_KEY")
+    config = json.load(open("readme-lol-items/config.json"))
+
+    name = config["Summoner Name"]
+    id, puuid = rf.get_summoner_identifiers(name, key)
+    rank_data = rf.get_summoner_rank(id, key)
+    extra_data["Rank"] = rank_data["tier"]
+
+
+
+
+
+    matches = rf.get_summoners_matches(puuid, key, 0, total_matches_to_look)
+    
+
+
+
+
+    # Returns the extra_data and a reverse list of the recently played champions
+    extra_data, last_champs_played, five_most_played, five_played_percentage = get_main_section_data(puuid, key, extra_data, matches)
+
+
+
+    # Get Mastery Info
+    mastery_info = get_mastery_section_data(id, key)
+
+     
+
+    '''
+    last_champs: list of champ names from last played to nth played
+    ordered: list of five champ names from most played to least
+    mastery_info [["champname", "specific_loading_image", mastery_score]]
+    counts: {'champname': percentage}
+    '''
 
 
     # Gather the square and loading images
-    get_champ_images(counts, "square_champs")
-    loading_image = get_loading_image(last_champs[0], "loading_images")
-    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", ordered, counts, loading_image, extra_data, total_matches_to_look, mastery_info)
+    dd.get_champ_images(five_played_percentage, "square_champs")
+    loading_image = dd.get_loading_image(last_champs_played[0], "loading_images")
+
+
+
+    # CREATE THE WIDGET
+    create_played_and_recent_widget(config, "README.md", "readme_lol_stats.md", five_most_played, five_played_percentage, loading_image, extra_data, total_matches_to_look, mastery_info)
     print("Finished")
+
+
 
 
 
