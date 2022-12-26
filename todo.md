@@ -33,6 +33,11 @@ Which questions we actually want answered need to be decided.
 
 
 
+### Widgets
+- [ ] Main widget (general stats, most played)
+- [ ] Mastery widget (left of the main widget)
+- [ ] Minimal Widget (Just icons of last played champions. Like a minimal header)
+
 
 
 

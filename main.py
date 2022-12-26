@@ -53,6 +53,15 @@ def copy_file_contents_to_destination(target_file, source_file):
 
 
 
+def last_played_champ_squares(list_of_champs):
+    dd.get_champ_images(list_of_champs, "square_champs")
+    result = ""
+    for champ in list_of_champs:
+        shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
+        result = f"{result}<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>"
+    return result
+
+
 def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
@@ -127,6 +136,11 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             f.write(f"</pre></th>")
 
         f.write(f"</tr></table>\n")
+
+        
+
+        #f.write(f'{last_played_champ_squares(main_widget_info["Extra"].get("Last Played Champs"))}\n')
+
 
         if config.get("Toggle Credit"):
             f.write("<h6 align='center'>\n\n")
@@ -203,6 +217,7 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     extra_data["Triplekills"] = triplekills
     extra_data["Doublekills"] = doublekills
 
+    extra_data["Last Played Champs"] = last_champs_played
 
     # Generates the information for the 5 most played champions
     total_length = len(last_champs_played)

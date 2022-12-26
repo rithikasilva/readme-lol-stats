@@ -1,6 +1,6 @@
 import requests
 import json
-
+import time
 
 
 # Gets square impage
