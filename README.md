@@ -5,25 +5,26 @@
 ### Example Layout
 Here is an example layout:
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'> Data from Last 10 Matches </h3><table align='center'><tr></tr>
-<tr align='left'><th><pre>Top 4 Recently Played Champions
+<h3 align='center'> Data from Last 100 Matches </h3><table align='center'><tr></tr>
+<tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina         |█████████████------------|  50.00%
-<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko            |████████-----------------|  30.00%
-<img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali            |███----------------------|  10.00%
-<img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/> Taliyah          |███----------------------|  10.00%
+<img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina         |████████-----------------|  30.00%
+<img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali            |██████-------------------|  23.00%
+<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko            |████---------------------|  15.00%
+<img src='readme-lol-items/Yasuo.png' alt='drawing' width='20'/> Yasuo            |████---------------------|  15.00%
+<img src='readme-lol-items/Yone.png' alt='drawing' width='20'/> Yone             |██-----------------------|   6.00%
 -------------------------
-Seconds CCing Enemies: 131
+Seconds CCing Enemies: 1130
 Current Rank: Silver <img src='rank_images/Emblem_Silver.png' alt='drawing' width='20'/>
 Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' alt='drawing' width='20'/>
-Total Abilities Used: 1829
-Total Solokills: 19
-Total Takedowns: 142
-KDA: 70/59/72
+Total Abilities Used: 20835
+Total Solokills: 152
+Total Takedowns: 1342
+KDA: 611/537/731
 Pentakills: 0
-Pentakills: 0
-Pentakills: 1
-Pentakills: 7
+Quadrakills: 0
+Triplekills: 5
+Doublekills: 65
 </pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
 <img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='50'/> Neeko: 136216 
