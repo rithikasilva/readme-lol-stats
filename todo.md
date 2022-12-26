@@ -38,4 +38,5 @@ Which questions we actually want answered need to be decided.
 
 
 ### General TODO
-- [ ] Ensuure graceful failure if any request is not met properly
+- [ ] Ensure graceful failure if any request is not met properly
+- [ ] Handle improper structure of calling repository
