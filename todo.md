@@ -33,9 +33,27 @@ Which questions we actually want answered need to be decided.
 
 
 
+### Widgets
+- [ ] Main widget (general stats, most played)
+- [ ] Mastery widget (left of the main widget)
+- [ ] Minimal Widget (Just icons of last played champions. Like a minimal header)
 
 
 
 
-### General TODO
-- [ ] Ensuure graceful failure if any request is not met properly
+
+### General TODO for Code
+- [ ] Ensure graceful failure if any request is not met properly
+- [ ] Handle improper structure of calling repository
+- [ ] Integrate Logging for debugging and error messaging
+
+
+### Maintain README 
+- [ ] Only keep information that is specific to implementation, and not specific to users
+
+
+### readme-lol-stats-action tasks
+- [ ] Create custom icon for action
+- [ ] Maintain accurate steps for usage
+- [ ] Give overview of every feature since that should be where all user related information should lie
+

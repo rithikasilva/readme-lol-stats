@@ -1,4 +1,3 @@
-import requests
 from dotenv import load_dotenv
 import os
 import json
@@ -7,6 +6,7 @@ import shutil
 import data_dragon_functions as dd
 import riot_api_functions as rf
 import time
+import logging
 
 
 
@@ -28,7 +28,6 @@ def copy_file_contents_to_destination(target_file, source_file):
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
     readme_lol_stats_file = open(source_file, encoding='utf-8').readlines()
-
     # Parse target file to see where to put widget
     final_output = []
     start_pos = 0
@@ -38,14 +37,12 @@ def copy_file_contents_to_destination(target_file, source_file):
             start_pos = pos
         elif line == "<!---LOL-STATS-END-HERE--->\n":
             end_pos = pos
-
     # Format everything
     start = final_file_lines[:start_pos+1]
     end = final_file_lines[end_pos:]
     start.extend(readme_lol_stats_file)
     start.extend(end)
     final_output = start
-    
     # Write to target file
     with open(target_file, "w", encoding="utf-8") as f:
         for line in final_output:
@@ -54,10 +51,16 @@ def copy_file_contents_to_destination(target_file, source_file):
 
 
 
+def last_played_champ_squares(list_of_champs):
+    dd.get_champ_images(list_of_champs, "square_champs")
+    result = ""
+    for champ in list_of_champs:
+        shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
+        result = f"{result}<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>"
+    return result
+
+
 def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
-
-
-
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
         f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches </h3>")
@@ -81,7 +84,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         if config["Extra Info"].get("Main Lane"):
             position = main_widget_info["Extra"]["Most Played Position"]
-            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support"}
+            common_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Middle", "BOTTOM": "Bottom", "UTILITY": "Support", "ARAM": "Aram"}
             file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
             rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
             if position == "ARAM":
@@ -131,6 +134,11 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             f.write(f"</pre></th>")
 
         f.write(f"</tr></table>\n")
+
+        
+
+        #f.write(f'{last_played_champ_squares(main_widget_info["Extra"].get("Last Played Champs"))}\n')
+
 
         if config.get("Toggle Credit"):
             f.write("<h6 align='center'>\n\n")
@@ -207,6 +215,7 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     extra_data["Triplekills"] = triplekills
     extra_data["Doublekills"] = doublekills
 
+    extra_data["Last Played Champs"] = last_champs_played
 
     # Generates the information for the 5 most played champions
     total_length = len(last_champs_played)
@@ -248,70 +257,53 @@ def get_mastery_section_data(id, api_key):
 
 
 def main():
-    total_matches_to_look = 10
-    
+    logging.basicConfig()
+    logging.basicConfig(format='%(message)s')
+    log = logging.getLogger(__name__)
+    try:
+
+        load_dotenv()
+        total_matches_to_look = 10
 
 
-    '''
-    Collect all the required information, but only populate with what is configured.
-    '''
+        key = os.getenv("API_KEY")
+        config = json.load(open("readme-lol-items/config.json"))
 
 
-    load_dotenv()
-    
+        extra_data = {}
+        if "Matches" in config: total_matches_to_look = max(1, min(abs(config["Matches"]), 100))
 
 
+        name = config["Summoner Name"]
+        id, puuid = rf.get_summoner_identifiers(name, key)
+        rank_data = rf.get_summoner_rank(id, key)
+        extra_data["Rank"] = rank_data["tier"]
+        global_data = {"Total Matches":  total_matches_to_look}
 
 
-    key = os.getenv("API_KEY")
-    config = json.load(open("readme-lol-items/config.json"))
+        # Get list of matches for the given user
+        matches = rf.get_summoners_matches(puuid, key, 0, total_matches_to_look)
+        
 
+        # Returns the extra_data and a reverse list of the recently played champions
+        main_widget_info = get_main_section_data(puuid, key, extra_data, matches)
+        # Get Mastery Info
+        mastery_widget_info = get_mastery_section_data(id, key)
 
-
-
-
-    extra_data = {}
-
-    # Add in a check for 0 somehow
-    if "Matches" in config: total_matches_to_look = min(abs(config["Matches"]), 100)
-
-    name = config["Summoner Name"]
-    id, puuid = rf.get_summoner_identifiers(name, key)
-    rank_data = rf.get_summoner_rank(id, key)
-    extra_data["Rank"] = rank_data["tier"]
-    global_data = {"Total Matches":  total_matches_to_look}
-
-
-
-    # Get list of matches for the given user
-    matches = rf.get_summoners_matches(puuid, key, 0, total_matches_to_look)
-    
-
-
-    # Returns the extra_data and a reverse list of the recently played champions
-    main_widget_info = get_main_section_data(puuid, key, extra_data, matches)
-
-
-    # Get Mastery Info
-    mastery_widget_info = get_mastery_section_data(id, key)
-
+        
+        # Gather the square and loading images
+        dd.get_champ_images(main_widget_info["Most Played"], "square_champs")
+   
      
-
- 
-    # Gather the square and loading images
-    dd.get_champ_images(main_widget_info["Most Played"], "square_champs")
-    #loading_image = dd.get_loading_image(last_champs_played[0], "loading_images")
-
-
-
-
-    # Organize data and create widget
-    #last_played_widget_info = {"Image": loading_image}
+        target_file = config["Target File"]
+        temp_file = "readme_lol_stats.md"
+        create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
+        print("Finished")
     
-    target_file = config["Target File"]
-    temp_file = "readme_lol_stats.md"
-    create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
-    print("Finished")
+    except FileNotFoundError:
+        log.warning('File not found. Ensure correct directory structure and files exist.')
+    except rf.BadRequest as e:
+        log.warning(f'BAD REQUEST ---- {e}')
 
 
 
