@@ -24,8 +24,6 @@ def create_loading_bar(percentage):
     return out
 
 
-
-
 def copy_file_contents_to_destination(target_file, source_file):
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
