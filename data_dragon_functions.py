@@ -1,9 +1,16 @@
 import requests
 import json
-import time
 
 
-# Gets square impage
+'''
+Given list_of_champions, saves an image of each champion into a separate file in folder.
+
+Paramters:
+- list_of_champs -- A list of champion names as strings. 
+- folder -- which folder to save collected champion images into.
+
+Return: None
+'''
 def get_champ_images(list_of_champs, folder):
     # Get the latest patch
     version = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
@@ -14,7 +21,18 @@ def get_champ_images(list_of_champs, folder):
         open(f"{folder}/{champ}.png", "wb").write(champ_image.content)
 
 
-# Gets the loading screen image of a champion and saves to folder
+
+'''
+Given a specific champion name, and a folder to save images to, saves a loading screen image of that champion.
+Handles specified skins in "readme-lol-items/config.json".
+
+Paramters:
+- champ_name -- A champions name as a string.
+- folder -- which folder to save collected champion image into.
+
+Returns:
+- title of the saved image as "{champ_name}_{skin_num}"
+'''
 def get_loading_image(champ_name, folder):
     config = json.load(open("readme-lol-items/config.json"))
     skin_num = 0
@@ -33,12 +51,20 @@ def get_loading_image(champ_name, folder):
     return f"{champ_name}_{skin_num}"
 
 
+
+'''
+Returns most recent version of data dragon available. Returns as string.
+'''
 def get_version():
     patch = requests.get("https://ddragon.leagueoflegends.com/api/versions.json")
     latest_version = patch.json()[0]
     return latest_version
 
 
+
+'''
+Returns all champion data from data dragon. Uses get_version(). Returns as parsed json.
+'''
 def get_champion_data():
     response = requests.get(f"https://ddragon.leagueoflegends.com/cdn/{get_version()}/data/en_US/champion.json")
     response = response.json()
@@ -46,7 +72,9 @@ def get_champion_data():
     return champ_data
 
 
-
+'''
+Returns longest name of any champion in League of Legends as a string.
+'''
 def get_longest_name():
     data = get_champion_data()
     names = []

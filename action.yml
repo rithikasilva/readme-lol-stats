@@ -1,4 +1,4 @@
-name: 'LoL README Stats'
+name: 'README Profile LoL Stats'
 description: 'Generate a widget of your fun LoL Statistics'
 author: "rithikasilva"
 branding:
@@ -7,10 +7,6 @@ branding:
 inputs:
   source:  # id of input
     description: 'name of directory that this is being called from'
-    required: true
-    default: '---'
-  pat:  # id of input
-    description: 'A personal access token for rithikasilva/readme-lol-stats'
     required: true
     default: '---'
   api-key:

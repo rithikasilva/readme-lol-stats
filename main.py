@@ -11,7 +11,15 @@ import logging
 
 
 
-# Given a percentage, generates a string to display a loading bar percentage
+'''
+Creates an ASCII percentage bar given a percentage.
+
+Parameters:
+- percentage -- requested percentage to make a percentage bar of.
+
+Returns:
+- out -- A string percentage bar which is 25 characters long.
+'''
 def create_loading_bar(percentage):
     bars = int((percentage / 100) * 25)
     out = "|"
@@ -24,6 +32,20 @@ def create_loading_bar(percentage):
     return out
 
 
+
+'''
+Copies all the contents of a source file and puts if in between special indicators in the target file.
+The indicators used are:
+
+"<!---LOL-STATS-START-HERE--->\n" for the start and "<!---LOL-STATS-END-HERE--->\n" for the end
+
+
+Parameters:
+- target_file -- file that contains the location to have content copied to.
+- source_file -- file that contains information to be copied.
+
+Returns: None
+'''
 def copy_file_contents_to_destination(target_file, source_file):
     # Open the the actual destination
     final_file_lines = open(target_file, encoding='utf-8').readlines()
@@ -60,11 +82,23 @@ def last_played_champ_squares(list_of_champs):
     return result
 
 
+'''
+Creates data widget and copies it to the target file.
 
+Parameters:
+- target_file -- file to copy data to.
+- temp_file -- name of temporary file to create to store data.
+- config -- parsed json of "config.json".
+- global_data -- data that applies to all current (and future) widgets such as total matches looked at.
+- main_widget_info -- all information that pertains to the main widget (left most) in dictionary form.
+- mastery_widget_info -- all information that pertains to the mastery widget (right most) in dictionary form.
+
+Returns: None
+'''
 def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
-        f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches </h3>")
+        f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches for {config['Summoner Name']}</h3>")
         f.write(f"<table align='center'><tr></tr>\n")
         f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
         for champ in main_widget_info['Most Played']:
@@ -122,10 +156,11 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             f.write(f"Doublekills: {main_widget_info['Extra']['Doublekills']}\n")
 
 
-
         f.write("</pre></th>")
 
-        # Master Section Info
+
+
+        # Mastery Section Info
         if config["Extra Info"].get("Mastery"):
             f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
             for champ in mastery_widget_info['Top Three Data']:
@@ -149,7 +184,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         if config.get("Toggle Credit"):
             f.write("<h6 align='center'>\n\n")
-            f.write("[README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
+            f.write("[README Profile LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
             f.write("</h6>\n")
 
 
@@ -160,7 +195,18 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
     
 '''
-Generates data for the main widget
+Generates data for the main section.
+
+Parameters:
+- puuid -- puuid of requested summoner to look at.
+- api_key -- Riot API key with general access.
+- extra_data -- dictionary to populate all text based information found at the bottom of the main widget with.
+- list_of_matches -- list of match id's to gather data from
+
+Returns:
+- dictionary in the format: {"Most Played": recent_most_played, "Percentages": played_percentage, "Extra": extra_data} where
+recent_most_played is a list of champion names in order of most played recently, played_percentage is a dictionary with champion names and
+what percentage of matches they were played recently, and extra_data (from the parameters).
 '''
 def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
     # Generate a list of champions that I played in the last x matches
@@ -239,7 +285,14 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
 
 
 '''
-Generate data for the mastery widget
+Generate data for the mastery section.
+
+Parameters:
+- id -- id of the summoner to get mastery information for.
+- api_key -- Riot API key with general access.
+
+Returns:
+- a dictionary which contains a list of lists. The lowests lists contain each champions name, their loading image title, and their mastery score.
 '''
 def get_mastery_section_data(id, api_key):
     # Get mastery information

@@ -1,7 +1,5 @@
-# readme-lol-stats
-
 ### Notes
-This is still in alpha, so a Access Token for the actual project repository and a Riot API key are required. Also, it currently only supports gathering information for players in NA.
+This is still in alpha, so an API key for the Riot API is required for this to work.
 
 ### Usage
 There must be a folder titles `readme-lol-items` in the repository that you wish to use this action in. Additionally, a file titled `config.json` with the following contents must exist:
@@ -9,36 +7,46 @@ There must be a folder titles `readme-lol-items` in the repository that you wish
 ```json
 {
     "Summoner Name": "R1tzcrackers",
+    "Matches": 10,
+    "Target File": "README.md",
+    "Toggle Credit": 1,
     "Skin Substitutions": {
         "Yasuo": "Nightbringer Yasuo",
         "Yone": "Dawnbringer Yone",
         "Akali": "K/DA Akali",
-        "Taliyah": "Pool Party Taliyah"
+        "Taliyah": "Pool Party Taliyah",
+        "Katarina": "Battle Queen Katarina"
     },
     "Extra Info": {
         "Seconds of CC": 1,
-        "Display Rank": 0,
-        "Main Lane": 0,
+        "Display Rank": 1,
+        "Main Lane": 1,
         "Ability Count": 1,
         "Solokills": 1,
         "Takedowns": 1,
-        "Mastery": 0
+        "Mastery": 1,
+        "K/D/A": 1,
+        "Pentakills": 1,
+        "Quadrakills": 1,
+        "Triplekills": 1,
+        "Doublekills": 1
     }
-}    
+} 
 ```
 The "Skin Substitutions" section allows you to specify a champion and your preferred skin to display with that champion.
 
 The "Extra Info" section allows you to toggle what is being show. A "1" is used when you want it to display, and a "0" is used when you don't want it to display.
 
-In your README.md file you want to place the following code:
+In your README.md file you want to place the following code **without the curly braces**:
 ```md
-<!---LOL-STATS-START-HERE--->
-<!---LOL-STATS-END-HERE--->
+{<!---LOL-STATS-START-HERE--->}
+{<!---LOL-STATS-END-HERE--->}
 ```
+
 This dictates where the generated statistics will be displayed.
 
 
-This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named "MY_PAT" with the Fine-Grained Access Token and "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository.
+This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named  "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@v0.1` with a release number of your choice for each successive version of the project.
 
 ```yml
 name: Run readme-lol-stats
@@ -67,10 +75,9 @@ jobs:
             
             # Run readme-lol-stats-action
           - name: Use readme-lol-stats-action
-            uses: rithikasilva/readme-lol-stats-action@master 
+            uses: rithikasilva/readme-lol-stats@v0.1 
             with:
                 source: ${{ github.event.repository.name }}
-                pat: ${{ secrets.MY_PAT }}
                 api-key: ${{ secrets.API_KEY }}
             
             # Commit files to current repo
@@ -89,13 +96,11 @@ jobs:
                 branch: main 
 ```
 
-*README LoL Stats isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
-
 
 ### Example Layout
 Here is an example layout:
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'> Data from Last 10 Matches </h3><table align='center'><tr></tr>
+<h3 align='center'> Data from Last 10 Matches for R1tzcrackers</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
 <img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali            |███████████--------------|  40.00%
@@ -123,9 +128,12 @@ Doublekills: 4
 </pre></th></tr></table>
 <h6 align='center'>
 
-[README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
+[README Profile LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
 </h6>
 <!---LOL-STATS-END-HERE--->
 
 
 
+
+
+*README Profile LoL Stats isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
