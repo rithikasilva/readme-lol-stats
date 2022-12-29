@@ -48,7 +48,7 @@ In your README.md file you want to place the following code **without the curly 
 This dictates where the generated statistics will be displayed.
 
 
-This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named "MY_PAT" with the Fine-Grained Access Token and "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository.
+This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named  "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@0.1` with a release number of your choice for each successive version of the project.
 
 ```yml
 name: Run readme-lol-stats
@@ -77,7 +77,7 @@ jobs:
             
             # Run readme-lol-stats-action
           - name: Use readme-lol-stats-action
-            uses: rithikasilva/readme-lol-stats@master 
+            uses: rithikasilva/readme-lol-stats@0.1 
             with:
                 source: ${{ github.event.repository.name }}
                 api-key: ${{ secrets.API_KEY }}
@@ -97,8 +97,6 @@ jobs:
                 github_token: ${{ secrets.GITHUB_TOKEN }}
                 branch: main 
 ```
-
-*README LoL Stats isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
 
 
 ### Example Layout
@@ -138,3 +136,6 @@ Doublekills: 4
 
 
 
+
+
+*README Profile LoL Stats isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
