@@ -1,0 +1,39 @@
+name: 'README LoL Stats'
+description: 'Generate a widget of your fun LoL Statistics'
+author: "rithikasilva"
+branding:
+  icon: 'square'
+  color: 'black'
+inputs:
+  source:  # id of input
+    description: 'name of directory that this is being called from'
+    required: true
+    default: '---'
+  pat:  # id of input
+    description: 'A personal access token for rithikasilva/readme-lol-stats'
+    required: true
+    default: '---'
+  api-key:
+    description: 'An API key for the Riot API'
+    required: true
+    default: '---'
+
+
+runs:
+  using: "composite"
+  steps:
+    - run: |
+        cd ..
+        git clone https://github.com/rithikasilva/readme-lol-stats.git
+        cd readme-lol-stats
+        pip install -r requirements.txt
+        cd ..
+        cp ${{ inputs.source }}/README.md readme-lol-stats/README.md
+        cp ${{ inputs.source }}/readme-lol-items/config.json readme-lol-stats/readme-lol-items/config.json
+        cd readme-lol-stats
+        echo "API_KEY=${{ inputs.api-key }}" > .env
+        python main.py
+        cd ..
+        cp readme-lol-stats/README.md ${{ inputs.source }}/README.md
+        cp -R readme-lol-stats/readme-lol-items ${{ inputs.source }}
+      shell: bash

@@ -1,5 +1,95 @@
 # readme-lol-stats
 
+### Notes
+This is still in alpha, so a Access Token for the actual project repository and a Riot API key are required. Also, it currently only supports gathering information for players in NA.
+
+### Usage
+There must be a folder titles `readme-lol-items` in the repository that you wish to use this action in. Additionally, a file titled `config.json` with the following contents must exist:
+
+```json
+{
+    "Summoner Name": "R1tzcrackers",
+    "Skin Substitutions": {
+        "Yasuo": "Nightbringer Yasuo",
+        "Yone": "Dawnbringer Yone",
+        "Akali": "K/DA Akali",
+        "Taliyah": "Pool Party Taliyah"
+    },
+    "Extra Info": {
+        "Seconds of CC": 1,
+        "Display Rank": 0,
+        "Main Lane": 0,
+        "Ability Count": 1,
+        "Solokills": 1,
+        "Takedowns": 1,
+        "Mastery": 0
+    }
+}    
+```
+The "Skin Substitutions" section allows you to specify a champion and your preferred skin to display with that champion.
+
+The "Extra Info" section allows you to toggle what is being show. A "1" is used when you want it to display, and a "0" is used when you don't want it to display.
+
+In your README.md file you want to place the following code:
+```md
+<!---LOL-STATS-START-HERE--->
+<!---LOL-STATS-END-HERE--->
+```
+This dictates where the generated statistics will be displayed.
+
+
+This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named "MY_PAT" with the Fine-Grained Access Token and "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository.
+
+```yml
+name: Run readme-lol-stats
+
+on:    
+    workflow_dispatch:
+
+jobs:
+    build:    
+        runs-on: ubuntu-latest
+        steps:
+            # Checkout current repo to runner
+          - name: Checkout current repo
+            uses: actions/checkout@v2 
+            
+            # Setup python
+          - name: setup python
+            uses: actions/setup-python@v4
+            with:
+                python-version: '3.9' 
+        
+            # Upgrade pip
+          - name: Upgrade Pip
+            run: |
+                python -m pip install --upgrade pip
+            
+            # Run readme-lol-stats-action
+          - name: Use readme-lol-stats-action
+            uses: rithikasilva/readme-lol-stats-action@master 
+            with:
+                source: ${{ github.event.repository.name }}
+                pat: ${{ secrets.MY_PAT }}
+                api-key: ${{ secrets.API_KEY }}
+            
+            # Commit files to current repo
+          - name: commit files
+            run: |
+                git config --local user.email "action@github.com"
+                git config --local user.name "GitHub Action"
+                git add -A
+                git diff-index --quiet HEAD || (git commit -a -m "updated logs" --allow-empty)
+            
+            # Push changes to current repo
+          - name: push changes
+            uses: ad-m/github-push-action@v0.6.0
+            with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                branch: main 
+```
+
+*README LoL Stats isn't endorsed by Riot Games and doesn't reflect the views or opinions of Riot Games or anyone officially involved in producing or managing Riot Games properties. Riot Games, and all associated properties are trademarks or registered trademarks of Riot Games, Inc.*
 
 
 ### Example Layout
@@ -31,9 +121,7 @@ Doublekills: 4
 <img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='50'/> Yone: 108926 
 <img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='50'/> Akali: 90335 
 </pre></th></tr></table>
-<table align='center'><tr></tr><tr><th><pre align='center'>Last 10 Champions
-<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Akali.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Akali.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Quinn.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Malphite.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Akali.png' alt='drawing' width='20'/>  <img src='readme-lol-items/Akali.png' alt='drawing' width='20'/>  
-</pre></th></tr></table><h6 align='center'>
+<h6 align='center'>
 
 [README LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
 </h6>
