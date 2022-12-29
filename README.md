@@ -46,7 +46,7 @@ In your README.md file you want to place the following code **without the curly 
 This dictates where the generated statistics will be displayed.
 
 
-This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named  "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@0.1` with a release number of your choice for each successive version of the project.
+This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named  "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@v0.1` with a release number of your choice for each successive version of the project.
 
 ```yml
 name: Run readme-lol-stats
@@ -75,7 +75,7 @@ jobs:
             
             # Run readme-lol-stats-action
           - name: Use readme-lol-stats-action
-            uses: rithikasilva/readme-lol-stats@0.1 
+            uses: rithikasilva/readme-lol-stats@v0.1 
             with:
                 source: ${{ github.event.repository.name }}
                 api-key: ${{ secrets.API_KEY }}
