@@ -184,7 +184,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         if config.get("Toggle Credit"):
             f.write("<h6 align='center'>\n\n")
-            f.write("[README Profile LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
+            f.write("[README Profile LoL Stats](https://github.com/marketplace/actions/readme-profile-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)\n")
             f.write("</h6>\n")
 
 
