@@ -1,7 +1,7 @@
 # readme-lol-stats
 
 ### Notes
-This is still in alpha, so a Access Token for the actual project repository and a Riot API key are required. Also, it currently only supports gathering information for players in NA.
+This is still in alpha, so an API key for the Riot API is required for this to work.
 
 ### Usage
 There must be a folder titles `readme-lol-items` in the repository that you wish to use this action in. Additionally, a file titled `config.json` with the following contents must exist:
@@ -9,32 +9,42 @@ There must be a folder titles `readme-lol-items` in the repository that you wish
 ```json
 {
     "Summoner Name": "R1tzcrackers",
+    "Matches": 10,
+    "Target File": "README.md",
+    "Toggle Credit": 1,
     "Skin Substitutions": {
         "Yasuo": "Nightbringer Yasuo",
         "Yone": "Dawnbringer Yone",
         "Akali": "K/DA Akali",
-        "Taliyah": "Pool Party Taliyah"
+        "Taliyah": "Pool Party Taliyah",
+        "Katarina": "Battle Queen Katarina"
     },
     "Extra Info": {
         "Seconds of CC": 1,
-        "Display Rank": 0,
-        "Main Lane": 0,
+        "Display Rank": 1,
+        "Main Lane": 1,
         "Ability Count": 1,
         "Solokills": 1,
         "Takedowns": 1,
-        "Mastery": 0
+        "Mastery": 1,
+        "K/D/A": 1,
+        "Pentakills": 1,
+        "Quadrakills": 1,
+        "Triplekills": 1,
+        "Doublekills": 1
     }
-}    
+} 
 ```
 The "Skin Substitutions" section allows you to specify a champion and your preferred skin to display with that champion.
 
 The "Extra Info" section allows you to toggle what is being show. A "1" is used when you want it to display, and a "0" is used when you don't want it to display.
 
-In your README.md file you want to place the following code:
+In your README.md file you want to place the following code **without the curly braces**:
 ```md
-<!---LOL-STATS-START-HERE--->
-<!---LOL-STATS-END-HERE--->
+{<!---LOL-STATS-START-HERE--->}
+{<!---LOL-STATS-END-HERE--->}
 ```
+
 This dictates where the generated statistics will be displayed.
 
 
@@ -67,10 +77,9 @@ jobs:
             
             # Run readme-lol-stats-action
           - name: Use readme-lol-stats-action
-            uses: rithikasilva/readme-lol-stats-action@master 
+            uses: rithikasilva/readme-lol-stats@master 
             with:
                 source: ${{ github.event.repository.name }}
-                pat: ${{ secrets.MY_PAT }}
                 api-key: ${{ secrets.API_KEY }}
             
             # Commit files to current repo

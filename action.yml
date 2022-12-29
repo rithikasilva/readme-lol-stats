@@ -9,10 +9,6 @@ inputs:
     description: 'name of directory that this is being called from'
     required: true
     default: '---'
-  pat:  # id of input
-    description: 'A personal access token for rithikasilva/readme-lol-stats'
-    required: true
-    default: '---'
   api-key:
     description: 'An API key for the Riot API'
     required: true
