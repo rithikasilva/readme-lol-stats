@@ -98,7 +98,7 @@ jobs:
 
 
 ### Example Layout
-Here is an example layout:
+Here is an example layout (best viewed with proper formatting [here](https://github.com/rithikasilva/readme-lol-stats)):
 <!---LOL-STATS-START-HERE--->
 <h3 align='center'> Data from Last 10 Matches for R1tzcrackers</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
