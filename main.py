@@ -51,14 +51,6 @@ def copy_file_contents_to_destination(target_file, source_file):
 
 
 
-def last_played_champ_squares(list_of_champs):
-    dd.get_champ_images(list_of_champs, "square_champs")
-    result = ""
-    for champ in list_of_champs:
-        shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
-        result = f"{result}<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>  "
-    return result
-
 
 def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
      # Write the actual display content to a temporary file
@@ -133,17 +125,11 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
                 f.write(f"{champ[0]}: {champ[2]} \n")
             f.write(f"</pre></th>")
 
+
+            
         f.write(f"</tr></table>\n")
 
         
-
-
-        # Minimal Widget of Last 10 Champions
-        '''temp_list_of_champs = main_widget_info["Extra"].get("Last Played Champs")[:10]
-        f.write(f"<table align='center'><tr></tr><tr><th><pre>Last {len(temp_list_of_champs)} Champions\n")
-        f.write(f'{last_played_champ_squares(temp_list_of_champs)}\n')
-        f.write("</pre></th></tr></table>")'''
-
 
 
         if config.get("Toggle Credit"):
