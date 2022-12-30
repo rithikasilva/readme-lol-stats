@@ -100,35 +100,35 @@ jobs:
 ### Example Layout
 Here is an example layout (best viewed with proper formatting [here](https://github.com/rithikasilva/readme-lol-stats)):
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'> Data from Last 10 Matches for R1tzcrackers</h3><table align='center'><tr></tr>
+<h3 align='center'> Data from Last 100 Matches for Doublelift</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Akali.png' alt='drawing' width='20'/> Akali            |███████████--------------|  40.00%
-<img src='readme-lol-items/Taliyah.png' alt='drawing' width='20'/> Taliyah          |██████-------------------|  20.00%
-<img src='readme-lol-items/Neeko.png' alt='drawing' width='20'/> Neeko            |███----------------------|  10.00%
-<img src='readme-lol-items/Katarina.png' alt='drawing' width='20'/> Katarina         |███----------------------|  10.00%
-<img src='readme-lol-items/Quinn.png' alt='drawing' width='20'/> Quinn            |███----------------------|  10.00%
+<img src='readme-lol-items/Twitch.png' alt='drawing' width='20'/> Twitch           |███----------------------|  11.00%
+<img src='readme-lol-items/Jinx.png' alt='drawing' width='20'/> Jinx             |███----------------------|  11.00%
+<img src='readme-lol-items/Kaisa.png' alt='drawing' width='20'/> Kaisa            |███----------------------|   9.00%
+<img src='readme-lol-items/Sivir.png' alt='drawing' width='20'/> Sivir            |███----------------------|   8.00%
+<img src='readme-lol-items/MissFortune.png' alt='drawing' width='20'/> MissFortune      |███----------------------|   8.00%
 -------------------------
-Seconds CCing Enemies: 121
-Current Rank: Silver <img src='rank_images/Emblem_Silver.png' alt='drawing' width='20'/>
-Most Played Position: Middle <img src='position_images/Position_Silver-Mid.png' alt='drawing' width='20'/>
-Total Abilities Used: 1856
-Total Solokills: 19
-Total Takedowns: 91
-KDA: 41/58/50
+Seconds CCing Enemies: 1124
+Current Rank: Master <img src='rank_images/Emblem_Master.png' alt='drawing' width='20'/>
+Most Played Position: Bottom <img src='position_images/Position_Master-Bot.png' alt='drawing' width='20'/>
+Total Abilities Used: 19237
+Total Solokills: 55
+Total Takedowns: 1236
+KDA: 627/477/609
 Pentakills: 0
-Quadrakills: 0
-Triplekills: 0
-Doublekills: 4
+Quadrakills: 1
+Triplekills: 10
+Doublekills: 84
 </pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
-<img align='center' src='readme-lol-items/Neeko_0.png' alt='drawing' width='50'/> Neeko: 136368 
-<img align='center' src='readme-lol-items/Yone_19.png' alt='drawing' width='50'/> Yone: 108926 
-<img align='center' src='readme-lol-items/Akali_9.png' alt='drawing' width='50'/> Akali: 90335 
+<img align='center' src='readme-lol-items/Jhin_0.png' alt='drawing' width='50'/> Jhin: 335442 
+<img align='center' src='readme-lol-items/Caitlyn_0.png' alt='drawing' width='50'/> Caitlyn: 244748 
+<img align='center' src='readme-lol-items/Jinx_0.png' alt='drawing' width='50'/> Jinx: 214789 
 </pre></th></tr></table>
 <h6 align='center'>
 
-[README Profile LoL Stats](https://github.com/marketplace/actions/readme-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
+[README Profile LoL Stats](https://github.com/marketplace/actions/readme-profile-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
 </h6>
 <!---LOL-STATS-END-HERE--->
 
