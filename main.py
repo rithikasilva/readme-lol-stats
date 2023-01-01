@@ -322,6 +322,12 @@ def main():
     log = logging.getLogger(__name__)
     try:
 
+        items_dir = os.listdir("readme-lol-items")
+        for item in items_dir:
+            if item.endswith(".png") or item.endswith(".gif"):
+                os.remove(os.path.join("readme-lol-items", item))
+
+
         load_dotenv()
         total_matches_to_look = 10
 
