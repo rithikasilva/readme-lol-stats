@@ -5,6 +5,7 @@ from collections import Counter
 import shutil
 import data_dragon_functions as dd
 import riot_api_functions as rf
+import image_generation as ig
 import time
 import logging
 
@@ -162,11 +163,24 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         # Mastery Section Info
         if config["Extra Info"].get("Mastery"):
+
+            
             f.write(f"<th><pre>Top 3 Champion Masteries\n------------------------\n")
+
+            images = [x for x in mastery_widget_info['Top Three Data']]
+            ig.create_mastery_gif(f'loading_images/{images[0][1]}.png', 
+            f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png', 
+            f'{images[0][0]}: {images[0][2]}', f'{images[1][0]}: {images[1][2]}', f'{images[2][0]}: {images[2][2]}', 'readme-lol-items/mastery.gif')
+            f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='350'/> ")
+
+            '''
+            NO GIF CODE
             for champ in mastery_widget_info['Top Three Data']:
                 shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
                 f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
                 f.write(f"{champ[0]}: {champ[2]} \n")
+            '''
+
             f.write(f"</pre></th>")
 
 
@@ -321,6 +335,14 @@ def main():
     logging.basicConfig(format='%(message)s')
     log = logging.getLogger(__name__)
     try:
+        
+
+        test = os.listdir("readme-lol-items")
+        for item in test:
+            if item.endswith(".png") or item.endswith(".gif"):
+                os.remove(os.path.join("readme-lol-items", item))
+
+
 
         load_dotenv()
         total_matches_to_look = 10
@@ -360,8 +382,9 @@ def main():
         create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info)
         print("Finished")
     
-    except FileNotFoundError:
+    except FileNotFoundError as e:
         log.warning('File not found. Ensure correct directory structure and files exist.')
+        log.warning(e)
     except rf.BadRequest as e:
         log.warning(f'BAD REQUEST ---- {e}')
 

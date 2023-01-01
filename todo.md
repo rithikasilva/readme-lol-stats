@@ -35,7 +35,7 @@ Which questions we actually want answered need to be decided.
 
 ### Widgets
 - [ ] Main widget (general stats, most played)
-- [ ] Mastery widget (left of the main widget)
+- [ ] Mastery widget (create gif for it instead)
 - [ ] Minimal Widget (Just icons of last played champions. Like a minimal header)
 
 
@@ -52,8 +52,4 @@ Which questions we actually want answered need to be decided.
 - [ ] Only keep information that is specific to implementation, and not specific to users
 
 
-### readme-lol-stats-action tasks
-- [ ] Create custom icon for action
-- [ ] Maintain accurate steps for usage
-- [ ] Give overview of every feature since that should be where all user related information should lie
 
