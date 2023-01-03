@@ -110,12 +110,14 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         
         for champ in main_widget_info['Most Played']:
             shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
-            ig.create_animated_loading_bar(main_widget_info['Percentages'][champ], f"readme-lol-items/{champ}_loading.gif")
             #f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(dd.get_longest_name() + 4, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
-            f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
+            '''f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
             + f" {champ}".ljust(dd.get_longest_name() + 4, " ") 
             + f"<img src='readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
-            + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
+            + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))'''
+            image_location = f'readme-lol-items/{champ}.png'
+            ig.create_animated_loading_bar(image_location, champ, main_widget_info['Percentages'][champ], f"readme-lol-items/loading_{champ}.gif")
+            f.write(f"<img src='readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
         
         
         f.write(f"-------------------------\n")
@@ -201,7 +203,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             ig.create_mastery_gif(f'loading_images/{images[0][1]}.png', 
             f'loading_images/{images[1][1]}.png', f'loading_images/{images[2][1]}.png', 
             f'{images[0][0]}: {images[0][2]}', f'{images[1][0]}: {images[1][2]}', f'{images[2][0]}: {images[2][2]}', 'readme-lol-items/mastery.gif')
-            f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='350'/> ")
+            f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
 
             '''
             NO GIF CODE

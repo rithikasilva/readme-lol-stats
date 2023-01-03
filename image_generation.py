@@ -1,5 +1,5 @@
 from PIL import Image, ImageDraw, ImageFont
-
+import data_dragon_functions as dd
 
 
 
@@ -116,7 +116,7 @@ def create_extra_info(list_of_messages, save_location):
 
 
 
-def create_animated_loading_bar(percentage, save_location):
+def create_animated_loading_bar(champ_image, champ, percentage, save_location):
     bars = int((percentage / 100) * 25)
     out = "|"
     for x in range(25):
@@ -126,14 +126,33 @@ def create_animated_loading_bar(percentage, save_location):
     current_pos = 1
 
 
+
     images = []
     background_colour = (24, 28, 36)
-    width = 30 * 24
+    width = 120 * 30
+    start_loading_bar = len(f" {champ}".ljust(dd.get_longest_name() + 4, " ")) * 70
+
     for bar in range(bars):
-        im = Image.new('RGB', (width , 50), background_colour)
+        im = Image.new('RGB', (width , 120), background_colour)
+
+        # CHAMPION ICON
+        im2 = Image.open(champ_image)
+        im.paste(im2, (0, 0))
+
+
+
         image_editable = ImageDraw.Draw(im)
-        font = ImageFont.truetype("CONSOLAB.TTF", size=50)
-        image_editable.text((0, 0), out, fill=(255, 255, 255), font=font)
+        font = ImageFont.truetype("CONSOLAB.TTF", size=120)
+
+        # Champion name
+        image_editable.text((200, 0), f"{champ}", fill=(255, 255, 255), font=font)
+
+        # Add the loading bar
+        image_editable.text((start_loading_bar, 0), out, fill=(255, 255, 255), font=font)
+
+        # Add the percentage
+        image_editable.text((start_loading_bar + (120 * 15), 0), f"{round(percentage, 2): .2f}%", fill=(255, 255, 255), font=font)
+
         images.append(im)
 
         out = out[:current_pos] + "█" + out[current_pos + 1:]

@@ -103,15 +103,15 @@ Here is an example layout (best viewed with proper formatting [here](https://git
 <h3 align='center'> Data from Last 10 Matches for Doublelift</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Zeri.png' alt='drawing' width='20'/> Zeri             <img src='readme-lol-items/Zeri_loading.gif' alt='drawing' width='170'/>  40.00%
-<img src='readme-lol-items/Lucian.png' alt='drawing' width='20'/> Lucian           <img src='readme-lol-items/Lucian_loading.gif' alt='drawing' width='170'/>  20.00%
-<img src='readme-lol-items/Twitch.png' alt='drawing' width='20'/> Twitch           <img src='readme-lol-items/Twitch_loading.gif' alt='drawing' width='170'/>  10.00%
-<img src='readme-lol-items/Varus.png' alt='drawing' width='20'/> Varus            <img src='readme-lol-items/Varus_loading.gif' alt='drawing' width='170'/>  10.00%
-<img src='readme-lol-items/Jhin.png' alt='drawing' width='20'/> Jhin             <img src='readme-lol-items/Jhin_loading.gif' alt='drawing' width='170'/>  10.00%
+<img src='readme-lol-items/loading_Zeri.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Lucian.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Twitch.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Varus.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Jhin.gif' alt='drawing' width='400'/>
 -------------------------
 <img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
-<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='350'/> </pre></th></tr></table>
+<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> </pre></th></tr></table>
 <h6 align='center'>
 
 [README Profile LoL Stats](https://github.com/marketplace/actions/readme-profile-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)
