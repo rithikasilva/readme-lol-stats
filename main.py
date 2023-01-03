@@ -97,26 +97,44 @@ Parameters:
 Returns: None
 '''
 def create_played_and_recent_widget(target_file, temp_file, config, global_data, main_widget_info, mastery_widget_info):
+
+    list_of_messages = []
+
+
      # Write the actual display content to a temporary file
     with open(temp_file, "w", encoding="utf-8") as f:
         f.write(f"<h3 align='center'> Data from Last {global_data['Total Matches']} Matches for {config['Summoner Name']}</h3>")
         f.write(f"<table align='center'><tr></tr>\n")
         f.write(f"<tr align='left'><th><pre>Top {len(main_widget_info['Most Played'])} Recently Played Champions\n-------------------------\n")
+        
+        
         for champ in main_widget_info['Most Played']:
             shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
-            f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(dd.get_longest_name() + 4, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
+            ig.create_animated_loading_bar(main_widget_info['Percentages'][champ], f"readme-lol-items/{champ}_loading.gif")
+            #f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(dd.get_longest_name() + 4, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
+            f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
+            + f" {champ}".ljust(dd.get_longest_name() + 4, " ") 
+            + f"<img src='readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
+            + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
+        
+        
         f.write(f"-------------------------\n")
         
+
+
+
 
         # Main Window Extra Info
         if config["Extra Info"].get("Seconds of CC"):
             cc = main_widget_info["Extra"]["Seconds of CC"]
-            f.write(f"Seconds CCing Enemies: {cc}\n")
+            #f.write(f"Seconds CCing Enemies: {cc}\n")
+            list_of_messages.append(f"Seconds CCing Enemies: {cc}")
         
         if config["Extra Info"].get("Display Rank"):
             rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
             shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'readme-lol-items/Emblem_{rank}.png')
-            f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
+            #f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
+            list_of_messages.append(f"Current Rank: {rank}")
 
         if config["Extra Info"].get("Main Lane"):
             position = main_widget_info["Extra"]["Most Played Position"]
@@ -124,41 +142,53 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
             rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
             if position == "ARAM":
-                f.write(f"Most Played Position: {common_names[position]}\n")
+                #f.write(f"Most Played Position: {common_names[position]}\n")
+                list_of_messages.append(f"Most Played Position: {common_names[position]}")
             else:
                 shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
-                f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
+                #f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
+                list_of_messages.append(f"Most Played Position: {common_names[position]}")
 
         if config["Extra Info"].get("Ability Count"):
             count = main_widget_info["Extra"]["Ability Count"]
-            f.write(f"Total Abilities Used: {count}\n")
+            #f.write(f"Total Abilities Used: {count}\n")
+            list_of_messages.append(f"Total Abilities Used: {count}")
 
         if config["Extra Info"].get("Solokills"):
             solokills = main_widget_info["Extra"]["Solokills"]
-            f.write(f"Total Solokills: {solokills}\n")
+            #f.write(f"Total Solokills: {solokills}\n")
+            list_of_messages.append(f"Total Solokills: {solokills}")
         
         if config["Extra Info"].get("Takedowns"):
             take_downs = main_widget_info["Extra"]["Takedowns"]
-            f.write(f"Total Takedowns: {take_downs}\n")
+            #f.write(f"Total Takedowns: {take_downs}\n")
+            list_of_messages.append(f"Total Takedowns: {take_downs}")
         
         if config["Extra Info"].get("K/D/A"):
-            f.write(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}\n")
-
+            #f.write(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}\n")
+            list_of_messages.append(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}")
         if config["Extra Info"].get("Pentakills"):
-            f.write(f"Pentakills: {main_widget_info['Extra']['Pentakills']}\n")
+            #f.write(f"Pentakills: {main_widget_info['Extra']['Pentakills']}\n")
+            list_of_messages.append(f"Pentakills: {main_widget_info['Extra']['Pentakills']}")
 
         if config["Extra Info"].get("Quadrakills"):
-            f.write(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}\n")
+            #f.write(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}\n")
+            list_of_messages.append(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}")
 
         if config["Extra Info"].get("Triplekills"):
-            f.write(f"Triplekills: {main_widget_info['Extra']['Triplekills']}\n")
+            #f.write(f"Triplekills: {main_widget_info['Extra']['Triplekills']}\n")
+            list_of_messages.append(f"Triplekills: {main_widget_info['Extra']['Triplekills']}")
 
         if config["Extra Info"].get("Doublekills"):
-            f.write(f"Doublekills: {main_widget_info['Extra']['Doublekills']}\n")
+            #f.write(f"Doublekills: {main_widget_info['Extra']['Doublekills']}\n")
+            list_of_messages.append(f"Doublekills: {main_widget_info['Extra']['Doublekills']}")
 
 
+
+        ig.create_extra_info(list_of_messages, "readme-lol-items/extra_info.gif")
+        f.write(f"<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/>")
         f.write("</pre></th>")
-
+        # End main section
 
 
         # Mastery Section Info
@@ -182,7 +212,6 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             '''
 
             f.write(f"</pre></th>")
-
 
             
         f.write(f"</tr></table>\n")

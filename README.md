@@ -103,24 +103,13 @@ Here is an example layout (best viewed with proper formatting [here](https://git
 <h3 align='center'> Data from Last 10 Matches for Doublelift</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Zeri.png' alt='drawing' width='20'/> Zeri             |██████-------------------|  20.00%
-<img src='readme-lol-items/Kaisa.png' alt='drawing' width='20'/> Kaisa            |██████-------------------|  20.00%
-<img src='readme-lol-items/Lucian.png' alt='drawing' width='20'/> Lucian           |██████-------------------|  20.00%
-<img src='readme-lol-items/Sivir.png' alt='drawing' width='20'/> Sivir            |██████-------------------|  20.00%
-<img src='readme-lol-items/Graves.png' alt='drawing' width='20'/> Graves           |███----------------------|  10.00%
+<img src='readme-lol-items/Zeri.png' alt='drawing' width='20'/> Zeri             <img src='readme-lol-items/Zeri_loading.gif' alt='drawing' width='170'/>  40.00%
+<img src='readme-lol-items/Lucian.png' alt='drawing' width='20'/> Lucian           <img src='readme-lol-items/Lucian_loading.gif' alt='drawing' width='170'/>  20.00%
+<img src='readme-lol-items/Twitch.png' alt='drawing' width='20'/> Twitch           <img src='readme-lol-items/Twitch_loading.gif' alt='drawing' width='170'/>  10.00%
+<img src='readme-lol-items/Varus.png' alt='drawing' width='20'/> Varus            <img src='readme-lol-items/Varus_loading.gif' alt='drawing' width='170'/>  10.00%
+<img src='readme-lol-items/Jhin.png' alt='drawing' width='20'/> Jhin             <img src='readme-lol-items/Jhin_loading.gif' alt='drawing' width='170'/>  10.00%
 -------------------------
-Seconds CCing Enemies: 29
-Current Rank: Gold <img src='rank_images/Emblem_Gold.png' alt='drawing' width='20'/>
-Most Played Position: Bottom <img src='position_images/Position_Gold-Bot.png' alt='drawing' width='20'/>
-Total Abilities Used: 1802
-Total Solokills: 5
-Total Takedowns: 105
-KDA: 51/39/54
-Pentakills: 0
-Quadrakills: 0
-Triplekills: 0
-Doublekills: 4
-</pre></th><th><pre>Top 3 Champion Masteries
+<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
 <img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='350'/> </pre></th></tr></table>
 <h6 align='center'>

@@ -91,3 +91,56 @@ def create_mastery_gif(m1_image, m2_image, m3_image, m1_text, m2_text, m3_text, 
     images[0].save(save_location,
                 save_all=True, append_images=images[1:], optimize=True, duration=20, loop=0)
 
+
+
+
+
+
+
+
+def create_extra_info(list_of_messages, save_location):
+    images = []
+    background_colour = (24, 28, 36)
+    width = 30 * 50
+    for message in list_of_messages:
+        im = Image.new('RGB', (width , 50), background_colour)
+        image_editable = ImageDraw.Draw(im)
+        font = ImageFont.truetype("CONSOLAB.TTF", size=50)
+        image_editable.text((0, 0), message, fill=(255, 255, 255), font=font)
+        images.append(im)
+
+
+
+    images[0].save(save_location,
+                save_all=True, append_images=images[1:], optimize=True, duration=4000, loop=0)
+
+
+
+def create_animated_loading_bar(percentage, save_location):
+    bars = int((percentage / 100) * 25)
+    out = "|"
+    for x in range(25):
+        out = out + "-"
+    out = out + "|"
+
+    current_pos = 1
+
+
+    images = []
+    background_colour = (24, 28, 36)
+    width = 30 * 24
+    for bar in range(bars):
+        im = Image.new('RGB', (width , 50), background_colour)
+        image_editable = ImageDraw.Draw(im)
+        font = ImageFont.truetype("CONSOLAB.TTF", size=50)
+        image_editable.text((0, 0), out, fill=(255, 255, 255), font=font)
+        images.append(im)
+
+        out = out[:current_pos] + "█" + out[current_pos + 1:]
+        current_pos += 1
+
+
+    images[0].save(save_location,
+                save_all=True, append_images=images[1:], optimize=True, duration=50)
+
+   
