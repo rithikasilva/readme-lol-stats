@@ -100,32 +100,18 @@ jobs:
 ### Example Layout
 Here is an example layout (best viewed with proper formatting [here](https://github.com/rithikasilva/readme-lol-stats)):
 <!---LOL-STATS-START-HERE--->
-<h3 align='center'> Data from Last 100 Matches for Doublelift</h3><table align='center'><tr></tr>
+<h3 align='center'> Data from Last 10 Matches for Doublelift</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/Twitch.png' alt='drawing' width='20'/> Twitch           |███----------------------|  11.00%
-<img src='readme-lol-items/Jinx.png' alt='drawing' width='20'/> Jinx             |███----------------------|  11.00%
-<img src='readme-lol-items/Kaisa.png' alt='drawing' width='20'/> Kaisa            |███----------------------|   9.00%
-<img src='readme-lol-items/Sivir.png' alt='drawing' width='20'/> Sivir            |███----------------------|   8.00%
-<img src='readme-lol-items/MissFortune.png' alt='drawing' width='20'/> MissFortune      |███----------------------|   8.00%
+<img src='readme-lol-items/loading_Zeri.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Lucian.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Twitch.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Varus.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Jhin.gif' alt='drawing' width='400'/>
 -------------------------
-Seconds CCing Enemies: 1124
-Current Rank: Master <img src='rank_images/Emblem_Master.png' alt='drawing' width='20'/>
-Most Played Position: Bottom <img src='position_images/Position_Master-Bot.png' alt='drawing' width='20'/>
-Total Abilities Used: 19237
-Total Solokills: 55
-Total Takedowns: 1236
-KDA: 627/477/609
-Pentakills: 0
-Quadrakills: 1
-Triplekills: 10
-Doublekills: 84
-</pre></th><th><pre>Top 3 Champion Masteries
+<img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
-<img align='center' src='readme-lol-items/Jhin_0.png' alt='drawing' width='50'/> Jhin: 335442 
-<img align='center' src='readme-lol-items/Caitlyn_0.png' alt='drawing' width='50'/> Caitlyn: 244748 
-<img align='center' src='readme-lol-items/Jinx_0.png' alt='drawing' width='50'/> Jinx: 214789 
-</pre></th></tr></table>
+<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> </pre></th></tr></table>
 <h6 align='center'>
 
 [README Profile LoL Stats](https://github.com/marketplace/actions/readme-profile-lol-stats) by [rithikasiilva](https://github.com/rithikasilva)

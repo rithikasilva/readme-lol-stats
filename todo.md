@@ -35,7 +35,7 @@ Which questions we actually want answered need to be decided.
 
 ### Widgets
 - [ ] Main widget (general stats, most played)
-- [ ] Mastery widget (left of the main widget)
+- [ ] Mastery widget (create gif for it instead)
 - [ ] Minimal Widget (Just icons of last played champions. Like a minimal header)
 
 
@@ -43,17 +43,13 @@ Which questions we actually want answered need to be decided.
 
 
 ### General TODO for Code
+- [ ] Need to find a way to specify what version to clone since this action is composite
 - [ ] Ensure graceful failure if any request is not met properly
 - [ ] Handle improper structure of calling repository
 - [ ] Integrate Logging for debugging and error messaging
-
 
 ### Maintain README 
 - [ ] Only keep information that is specific to implementation, and not specific to users
 
 
-### readme-lol-stats-action tasks
-- [ ] Create custom icon for action
-- [ ] Maintain accurate steps for usage
-- [ ] Give overview of every feature since that should be where all user related information should lie
 
