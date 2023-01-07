@@ -20,7 +20,7 @@ runs:
   steps:
     - run: |
         cd ..
-        git clone https://github.com/rithikasilva/readme-lol-stats.git
+        git clone https://github.com/rithikasilva/readme-lol-stats/tree/features.git
         cd readme-lol-stats
         pip install -r requirements.txt
         cd ..
