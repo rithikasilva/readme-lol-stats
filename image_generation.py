@@ -92,12 +92,6 @@ def create_mastery_gif(m1_image, m2_image, m3_image, m1_text, m2_text, m3_text, 
                 save_all=True, append_images=images[1:], optimize=True, duration=20, loop=0)
 
 
-
-
-
-
-
-
 def create_extra_info(list_of_messages, save_location):
     images = []
     background_colour = (24, 28, 36)
@@ -113,7 +107,6 @@ def create_extra_info(list_of_messages, save_location):
 
     images[0].save(save_location,
                 save_all=True, append_images=images[1:], optimize=True, duration=4000, loop=0)
-
 
 
 def create_animated_loading_bar(champ_image, champ, percentage, save_location):
@@ -163,3 +156,4 @@ def create_animated_loading_bar(champ_image, champ, percentage, save_location):
                 save_all=True, append_images=images[1:], optimize=True, duration=50)
 
    
+
