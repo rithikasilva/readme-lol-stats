@@ -117,7 +117,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))'''
             image_location = f'readme-lol-items/{champ}.png'
             ig.create_animated_loading_bar(image_location, champ, main_widget_info['Percentages'][champ], f"readme-lol-items/loading_{champ}.gif")
-            f.write(f"<img src='readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
+            f.write(f"<img style='margin:0;padding:0;' src='readme-lol-items/loading_{champ}.gif' alt='drawing' width='400'/>\n")
         
         
         f.write(f"-------------------------\n")
