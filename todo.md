@@ -43,6 +43,7 @@ Which questions we actually want answered need to be decided.
 
 
 ### General TODO for Code
+- [ ] Handle case where user requests rank data, but doesn't have rank data for the current season.
 - [ ] Need to find a way to specify what version to clone since this action is composite
 - [ ] Ensure graceful failure if any request is not met properly
 - [ ] Handle improper structure of calling repository
