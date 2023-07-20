@@ -2,7 +2,7 @@
 This is still in alpha, so an API key for the Riot API is required for this to work.
 
 ### Usage
-There must be a folder titles `readme-lol-items` in the repository that you wish to use this action in. Additionally, a file titled `config.json` with the following contents must exist:
+There must be a folder titled `readme-lol-items` in the repository that you wish to use this action in. Additionally, a file titled `config.json` with the following contents must exist:
 
 ```json
 {
