@@ -6,7 +6,7 @@ There must be a folder titled `readme-lol-items` in the repository that you wish
 
 ```json
 {
-    "Summoner Name": "R1tzcrackers",
+    "Summoner Name": "{Your Summoner Name}",
     "Matches": 10,
     "Target File": "README.md",
     "Toggle Credit": 1,
