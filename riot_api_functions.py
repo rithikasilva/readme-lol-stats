@@ -100,8 +100,8 @@ Parameters:
 Returns:
 - parsed -- list of dictionaries containing the id of a champion and the requested summoners mastery of them.
 '''
-def get_masteries(id, api_key):
-    mastery_data = riot_api_get("na1", f"lol/champion-mastery/v4/champion-masteries/by-summoner/{id}/top", {"api_key": api_key})
+def get_masteries(puuid, api_key):
+    mastery_data = riot_api_get("na1", f"lol/champion-mastery/v4/champion-masteries/by-puuid/{puuid}", {"api_key": api_key})
     parsed = []
     for champ in mastery_data:
         parsed.append({"championId": champ["championId"], "championPoints": champ["championPoints"]})
