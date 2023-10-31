@@ -278,11 +278,15 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs_played.append(participant["championName"])
-                ability_usage += participant["challenges"]["abilityUses"]
+
+                
                 played_positions.append(participant["individualPosition"])
                 time_ccing += participant["timeCCingOthers"]
-                solo_kills += participant["challenges"]["soloKills"]
-                take_downs += participant["challenges"]["takedowns"]
+
+                if "challenges" in participant:
+                    ability_usage += participant["challenges"]["abilityUses"]
+                    solo_kills += participant["challenges"]["soloKills"]
+                    take_downs += participant["challenges"]["takedowns"]
 
                 global_kills += participant["kills"]
                 global_deaths += participant["deaths"]
@@ -339,9 +343,9 @@ Parameters:
 Returns:
 - a dictionary which contains a list of lists. The lowests lists contain each champions name, their loading image title, and their mastery score.
 '''
-def get_mastery_section_data(id, api_key):
+def get_mastery_section_data(puuid, api_key):
     # Get mastery information
-    champ_id_points = rf.get_masteries(id, api_key)
+    champ_id_points = rf.get_masteries(puuid, api_key)
     champ_data = dd.get_champion_data()
 
     for id in champ_id_points:
@@ -407,7 +411,7 @@ def main():
         # Returns the extra_data and a reverse list of the recently played champions
         main_widget_info = get_main_section_data(puuid, key, extra_data, matches)
         # Get Mastery Info
-        mastery_widget_info = get_mastery_section_data(id, key)
+        mastery_widget_info = get_mastery_section_data(puuid, key)
 
         
         # Gather the square and loading images
