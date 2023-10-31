@@ -11,11 +11,7 @@ There must be a folder titled `readme-lol-items` in the repository that you wish
     "Target File": "README.md",
     "Toggle Credit": 1,
     "Skin Substitutions": {
-        "Yasuo": "Nightbringer Yasuo",
-        "Yone": "Dawnbringer Yone",
-        "Akali": "K/DA Akali",
-        "Taliyah": "Pool Party Taliyah",
-        "Katarina": "Battle Queen Katarina"
+        "Caitlyn": "Battle Academia Caitlyn"
     },
     "Extra Info": {
         "Seconds of CC": 1,
@@ -103,11 +99,11 @@ Here is an example layout (best viewed with proper formatting [here](https://git
 <h3 align='center'> Data from Last 10 Matches for Doublelift</h3><table align='center'><tr></tr>
 <tr align='left'><th><pre>Top 5 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/loading_Zeri.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Lucian.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Twitch.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Varus.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Jhin.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Xayah.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Kindred.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Briar.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_KogMaw.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Kaisa.gif' alt='drawing' width='400'/>
 -------------------------
 <img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------
