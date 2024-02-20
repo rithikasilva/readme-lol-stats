@@ -35,7 +35,7 @@ Which questions we actually want answered need to be decided.
 
 ### Widgets
 - [ ] Main widget (general stats, most played)
-- [ ] Mastery widget (create gif for it instead)
+- [X] Mastery widget (create gif for it instead)
 - [ ] Minimal Widget (Just icons of last played champions. Like a minimal header)
 
 
@@ -43,14 +43,14 @@ Which questions we actually want answered need to be decided.
 
 
 ### General TODO for Code
-- [ ] Handle case where user requests rank data, but doesn't have rank data for the current season.
-- [ ] Need to find a way to specify what version to clone since this action is composite
-- [ ] Ensure graceful failure if any request is not met properly
+- [X] Handle different regions.
+- [X] Handle case where user requests rank data, but doesn't have rank data for the current season.
+- [X] Need to find a way to specify what version to clone since this action is composite -> specify in the action.yml what tag to clone.
+- [X] Ensure graceful failure if any request is not met properly
 - [ ] Handle improper structure of calling repository
 - [ ] Integrate Logging for debugging and error messaging
 
-### Maintain README 
-- [ ] Only keep information that is specific to implementation, and not specific to users
+
 
 
 
