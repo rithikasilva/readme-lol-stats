@@ -1,23 +1,25 @@
 {
     "Summoner Name": "Doublelift",
+    "Platform Routing Region Code": "na1",
+    "Regional Routing Name": "americas",
     "Matches": 10,
     "Target File": "README.md",
-    "Toggle Credit": 1,
+    "Toggle Credit": true,
     "Skin Substitutions": {
         "Caitlyn": "Battle Academia Caitlyn"
     },
     "Extra Info": {
-        "Seconds of CC": 1,
-        "Display Rank": 1,
-        "Main Lane": 1,
-        "Ability Count": 1,
-        "Solokills": 1,
-        "Takedowns": 1,
-        "Mastery": 1,
-        "K/D/A": 1,
-        "Pentakills": 1,
-        "Quadrakills": 1,
-        "Triplekills": 1,
-        "Doublekills": 1
+        "Seconds of CC": true,
+        "Display Rank": true,
+        "Main Lane": true,
+        "Ability Count": true,
+        "Solokills": true,
+        "Takedowns": true,
+        "Mastery": true,
+        "K/D/A": true,
+        "Pentakills": true,
+        "Quadrakills": true,
+        "Triplekills": true,
+        "Doublekills": true
     }
 }

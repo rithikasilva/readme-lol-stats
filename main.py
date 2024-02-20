@@ -110,7 +110,6 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         
         for champ in main_widget_info['Most Played']:
             shutil.copyfile(f'square_champs/{champ}.png', f"readme-lol-items/{champ}.png")
-            #f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" + f" {champ}".ljust(dd.get_longest_name() + 4, " ") + create_loading_bar(main_widget_info['Percentages'][champ]) + f"{round(main_widget_info['Percentages'][champ], 2): .2f}%\n".rjust(9, " "))
             '''f.write(f"<img src='readme-lol-items/{champ}.png' alt='drawing' width='20'/>" 
             + f" {champ}".ljust(dd.get_longest_name() + 4, " ") 
             + f"<img src='readme-lol-items/{champ}_loading.gif' alt='drawing' width='170'/>"
@@ -129,14 +128,13 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         # Main Window Extra Info
         if config["Extra Info"].get("Seconds of CC"):
             cc = main_widget_info["Extra"]["Seconds of CC"]
-            #f.write(f"Seconds CCing Enemies: {cc}\n")
             list_of_messages.append(f"Seconds CCing Enemies: {cc}")
         
         if config["Extra Info"].get("Display Rank"):
-            rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
-            shutil.copyfile(f'rank_images/Emblem_{rank}.png', f'readme-lol-items/Emblem_{rank}.png')
-            #f.write(f"Current Rank: {rank} <img src='rank_images/Emblem_{rank}.png' alt='drawing' width='20'/>\n")
-            list_of_messages.append(f"Current Rank: {rank}")
+            if main_widget_info["Extra"]["Rank"] != "Unranked":
+                rank = main_widget_info["Extra"]["Rank"].title()
+                shutil.copyfile(f'rank_images/Rank={rank}.png', f'readme-lol-items/Rank={rank}.png')
+                list_of_messages.append(f"Current Rank: {rank}")
 
         if config["Extra Info"].get("Main Lane"):
             position = main_widget_info["Extra"]["Most Played Position"]
@@ -144,45 +142,35 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             file_names = {"TOP": "Top", "JUNGLE": "Jungle", "MIDDLE": "Mid", "BOTTOM": "Bot", "UTILITY": "Support"}
             rank = main_widget_info["Extra"]["Rank"][0] + main_widget_info["Extra"]["Rank"][1:].lower()
             if position == "ARAM":
-                #f.write(f"Most Played Position: {common_names[position]}\n")
                 list_of_messages.append(f"Most Played Position: {common_names[position]}")
             else:
                 shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
-                #f.write(f"Most Played Position: {common_names[position]} <img src='position_images/Position_{rank}-{file_names[position]}.png' alt='drawing' width='20'/>\n")
                 list_of_messages.append(f"Most Played Position: {common_names[position]}")
 
         if config["Extra Info"].get("Ability Count"):
             count = main_widget_info["Extra"]["Ability Count"]
-            #f.write(f"Total Abilities Used: {count}\n")
             list_of_messages.append(f"Total Abilities Used: {count}")
 
         if config["Extra Info"].get("Solokills"):
             solokills = main_widget_info["Extra"]["Solokills"]
-            #f.write(f"Total Solokills: {solokills}\n")
             list_of_messages.append(f"Total Solokills: {solokills}")
         
         if config["Extra Info"].get("Takedowns"):
             take_downs = main_widget_info["Extra"]["Takedowns"]
-            #f.write(f"Total Takedowns: {take_downs}\n")
             list_of_messages.append(f"Total Takedowns: {take_downs}")
         
         if config["Extra Info"].get("K/D/A"):
-            #f.write(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}\n")
             list_of_messages.append(f"KDA: {main_widget_info['Extra']['Kills']}/{main_widget_info['Extra']['Deaths']}/{main_widget_info['Extra']['Assists']}")
         if config["Extra Info"].get("Pentakills"):
-            #f.write(f"Pentakills: {main_widget_info['Extra']['Pentakills']}\n")
             list_of_messages.append(f"Pentakills: {main_widget_info['Extra']['Pentakills']}")
 
         if config["Extra Info"].get("Quadrakills"):
-            #f.write(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}\n")
             list_of_messages.append(f"Quadrakills: {main_widget_info['Extra']['Quadrakills']}")
 
         if config["Extra Info"].get("Triplekills"):
-            #f.write(f"Triplekills: {main_widget_info['Extra']['Triplekills']}\n")
             list_of_messages.append(f"Triplekills: {main_widget_info['Extra']['Triplekills']}")
 
         if config["Extra Info"].get("Doublekills"):
-            #f.write(f"Doublekills: {main_widget_info['Extra']['Doublekills']}\n")
             list_of_messages.append(f"Doublekills: {main_widget_info['Extra']['Doublekills']}")
 
 
@@ -243,6 +231,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 Generates data for the main section.
 
 Parameters:
+- region_name -- regional value name for summoner
 - puuid -- puuid of requested summoner to look at.
 - api_key -- Riot API key with general access.
 - extra_data -- dictionary to populate all text based information found at the bottom of the main widget with.
@@ -253,7 +242,7 @@ Returns:
 recent_most_played is a list of champion names in order of most played recently, played_percentage is a dictionary with champion names and
 what percentage of matches they were played recently, and extra_data (from the parameters).
 '''
-def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
+def get_main_section_data(region_name, puuid, api_key, extra_data, list_of_matches):
     # Generate a list of champions that I played in the last x matches
     last_champs_played = []
     played_positions = []
@@ -274,7 +263,7 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
 
 
     for match in list_of_matches:
-        response = rf.get_match_data(match, api_key)
+        response = rf.get_match_data(region_name, match, api_key)
         for participant in response["info"]["participants"]:
             if participant["puuid"] == puuid:
                 last_champs_played.append(participant["championName"])
@@ -337,15 +326,16 @@ def get_main_section_data(puuid, api_key, extra_data, list_of_matches):
 Generate data for the mastery section.
 
 Parameters:
+- region_code -- platform code for region summoner belongs to
 - id -- id of the summoner to get mastery information for.
 - api_key -- Riot API key with general access.
 
 Returns:
 - a dictionary which contains a list of lists. The lowests lists contain each champions name, their loading image title, and their mastery score.
 '''
-def get_mastery_section_data(puuid, api_key):
+def get_mastery_section_data(region_code, puuid, api_key):
     # Get mastery information
-    champ_id_points = rf.get_masteries(puuid, api_key)
+    champ_id_points = rf.get_masteries(region_code, puuid, api_key)
     champ_data = dd.get_champion_data()
 
     for id in champ_id_points:
@@ -398,20 +388,22 @@ def main():
 
 
         name = config["Summoner Name"]
-        id, puuid = rf.get_summoner_identifiers(name, key)
-        rank_data = rf.get_summoner_rank(id, key)
+        region_code = config["Platform Routing Region Code"]
+        region_name = config["Regional Routing Name"]
+        id, puuid = rf.get_summoner_identifiers(region_code, name, key)
+        rank_data = rf.get_summoner_rank(region_code, id, key)
         extra_data["Rank"] = rank_data["tier"]
         global_data = {"Total Matches":  total_matches_to_look}
 
 
         # Get list of matches for the given user
-        matches = rf.get_summoners_matches(puuid, key, 0, total_matches_to_look)
+        matches = rf.get_summoners_matches(region_name, puuid, key, 0, total_matches_to_look)
         
 
         # Returns the extra_data and a reverse list of the recently played champions
-        main_widget_info = get_main_section_data(puuid, key, extra_data, matches)
+        main_widget_info = get_main_section_data(region_name, puuid, key, extra_data, matches)
         # Get Mastery Info
-        mastery_widget_info = get_mastery_section_data(puuid, key)
+        mastery_widget_info = get_mastery_section_data(region_code, puuid, key)
 
         
         # Gather the square and loading images
@@ -426,11 +418,10 @@ def main():
     except FileNotFoundError as e:
         log.warning('File not found. Ensure correct directory structure and files exist.')
         log.warning(e)
-    except rf.BadRequest as e:
-        log.warning(f'BAD REQUEST ---- {e}')
-
-
-
+    except rf.RiotApiBadRequest as e:
+        log.warning(f'{e}')
+    except Exception as e:
+        log.warning(f'{e}')
 
 
 if __name__ == "__main__":
