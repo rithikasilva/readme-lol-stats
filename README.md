@@ -47,7 +47,7 @@ In your README.md file you want to place the following code **without the curly 
 This dictates where the generated statistics will be displayed.
 
 
-This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a secret named  "API_KEY" with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@master` with a release number of your choice for each successive version of the project.
+This following code allows you to run the project manually. You can schedule using cron if you want to automate it. Ensure to have a repository secret named  `API_KEY` with the Riot API key for this action to work. Additionally, the code must be placed in the `.github/workflows` directory of the repository. Note that you may replace `@master` with a release tag of your choice for each successive version of the project.
 
 ```yml
 name: Run readme-lol-stats
@@ -99,16 +99,14 @@ jobs:
 
 
 ### Example Layout
-Here is an example layout (best viewed with proper formatting [here](https://github.com/rithikasilva/readme-lol-stats)):
+Here is an example layout (best viewed in GitHub Dark Mode with proper formatting [here](https://github.com/rithikasilva/readme-lol-stats)):
 <!---LOL-STATS-START-HERE--->
 <h3 align='center'> Data from Last 10 Matches for Doublelift</h3><table align='center'><tr></tr>
-<tr align='left'><th><pre>Top 5 Recently Played Champions
+<tr align='left'><th><pre>Top 3 Recently Played Champions
 -------------------------
-<img src='readme-lol-items/loading_Jhin.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Smolder.gif' alt='drawing' width='400'/>
+<img src='readme-lol-items/loading_Jhin.gif' alt='drawing' width='400'/>
 <img src='readme-lol-items/loading_Varus.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Rakan.gif' alt='drawing' width='400'/>
-<img src='readme-lol-items/loading_Ashe.gif' alt='drawing' width='400'/>
 -------------------------
 <img align='center' src='readme-lol-items/extra_info.gif' alt='drawing' width='350'/></pre></th><th><pre>Top 3 Champion Masteries
 ------------------------

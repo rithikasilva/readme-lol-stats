@@ -1,5 +1,5 @@
 import requests
-
+import time
 
 class RiotApiBadRequest(Exception):
     pass
@@ -21,9 +21,10 @@ def riot_api_get(region, endpoint, headers):
     data = response.json()
     if "status" in data and data["status"]["status_code"] != 200:
         message = f"Error in getting endpoint {endpoint}\nin region {region}\nwith headers {headers}\n" + \
-                f"with status code {data['status']['status_code']}\nwith message{data['status']['message']}"
+                f"with status code {data['status']['status_code']}\nwith message {data['status']['message']}"
         raise RiotApiBadRequest("Riot API Functions Error:\n" + message)
     else:
+        time.sleep(0.1) # Force sleep for rate limit -> look into a different way to handle this
         return data
 
 
