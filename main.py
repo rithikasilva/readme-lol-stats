@@ -10,6 +10,18 @@ import time
 import logging
 
 
+'''
+Given a string, replaces the API Key with stars to preventing leaking.
+
+Paramters:
+- message -- string possibly containing api_key
+- api_key -- API Key to wipe
+
+Returns:
+- result -- string that replaces api_key with stars
+'''
+def wipe_api_key(message, api_key):
+    return message.replace(api_key, "********")
 
 
 '''
@@ -133,7 +145,7 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
         if config["Extra Info"].get("Display Rank"):
             if main_widget_info["Extra"]["Rank"] != "Unranked":
                 rank = main_widget_info["Extra"]["Rank"].title()
-                shutil.copyfile(f'rank_images/Rank={rank}.png', f'readme-lol-items/Rank={rank}.png')
+                shutil.copyfile(f'rank_images/Rank={rank}.png', f'readme-lol-items/Solo-Duo-Rank.png')
                 list_of_messages.append(f"Current Rank: {rank}")
 
         if config["Extra Info"].get("Main Lane"):
@@ -144,7 +156,6 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             if position == "ARAM":
                 list_of_messages.append(f"Most Played Position: {common_names[position]}")
             else:
-                shutil.copyfile(f'position_images/Position_{rank}-{file_names[position]}.png', f'readme-lol-items/Position_{rank}-{file_names[position]}.png')
                 list_of_messages.append(f"Most Played Position: {common_names[position]}")
 
         if config["Extra Info"].get("Ability Count"):
@@ -193,13 +204,14 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
             f'{images[0][0]}: {images[0][2]}', f'{images[1][0]}: {images[1][2]}', f'{images[2][0]}: {images[2][2]}', 'readme-lol-items/mastery.gif')
             f.write(f"<img align='center' src='readme-lol-items/mastery.gif' alt='drawing' width='320'/> ")
 
-            '''
-            NO GIF CODE
-            for champ in mastery_widget_info['Top Three Data']:
-                shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
-                f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
-                f.write(f"{champ[0]}: {champ[2]} \n")
-            '''
+            # '''
+            # NO GIF CODE
+            # '''
+            # for champ in mastery_widget_info['Top Three Data']:
+            #     shutil.copyfile(f'loading_images/{champ[1]}.png', f'readme-lol-items/{champ[1]}.png')
+            #     f.write(f"<img align='center' src='readme-lol-items/{champ[1]}.png' alt='drawing' width='50'/> ")
+            #     f.write(f"{champ[0]}: {champ[2]} \n")
+            
 
             f.write(f"</pre></th>")
 
@@ -208,11 +220,11 @@ def create_played_and_recent_widget(target_file, temp_file, config, global_data,
 
         
 
-        # Minimal Widget of Last 10 Champions
-        '''temp_list_of_champs = main_widget_info["Extra"].get("Last Played Champs")[:10]
-        f.write(f"<table align='center'><tr></tr><tr><th><pre>Last {len(temp_list_of_champs)} Champions\n")
-        f.write(f'{last_played_champ_squares(temp_list_of_champs)}\n')
-        f.write("</pre></th></tr></table>")'''
+        # # Minimal Widget of Last 10 Champions
+        # temp_list_of_champs = main_widget_info["Extra"].get("Last Played Champs")[:10]
+        # f.write(f"<table align='center'><tr></tr><tr><th><pre>Last {len(temp_list_of_champs)} Champions\n")
+        # f.write(f'{last_played_champ_squares(temp_list_of_champs)}\n')
+        # f.write("</pre></th></tr></table>")
 
 
         if config.get("Toggle Credit"):
@@ -382,7 +394,6 @@ def main():
         key = os.getenv("API_KEY")
         config = json.load(open("readme-lol-items/config.json"))
 
-
         extra_data = {}
         if "Matches" in config: total_matches_to_look = max(1, min(abs(config["Matches"]), 100))
 
@@ -419,9 +430,9 @@ def main():
         log.warning('File not found. Ensure correct directory structure and files exist.')
         log.warning(e)
     except rf.RiotApiBadRequest as e:
-        log.warning(f'{e}')
+        log.warning(f'{wipe_api_key(str(e), key)}')
     except Exception as e:
-        log.warning(f'{e}')
+        log.warning(f'{wipe_api_key(str(e), key)}')
 
 
 if __name__ == "__main__":
